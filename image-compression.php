@@ -2,7 +2,7 @@
 
 /**
  * Plugin Name: Crush.pics - Image Compression and Optimization
- * Description: Crush.pics Image Compression and Optimization using Crush.pics API
+ * Description: Image Compression and Optimization using Crush.pics API
  * Version: 1.7.7
  * Author: Space Squirrel Ltd.
  * Author URI: https://crush.pics
