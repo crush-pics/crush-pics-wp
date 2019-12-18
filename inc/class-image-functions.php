@@ -975,6 +975,4 @@ class Image_Functions {
         return $total_versions_no;
     }
 
-    
-
 }
