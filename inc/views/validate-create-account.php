@@ -21,7 +21,7 @@ if (!empty($_GET['email'])) {
                                 <strong class="text-dark"><?php _e('Let’s validate your API Key - ', 'wp-image-compression'); ?></strong><?php _e("Copy & paste it in the field below  then click the Validate button to log into your Crush.pics account.", 'wp-image-compression'); ?>
                             <?php endif; ?>
                         </p>
-
+                         
                         <form>
 
                             <div class="form-row">

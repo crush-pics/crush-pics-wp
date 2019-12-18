@@ -8,7 +8,7 @@ class Image_Functions {
     protected static $crush_all_process;
 
     public function __construct() {
-        
+
     }
 
     public static function compress_image_webhook_callaback($parameters, $status = '') {
@@ -974,5 +974,7 @@ class Image_Functions {
         }
         return $total_versions_no;
     }
+
+    
 
 }

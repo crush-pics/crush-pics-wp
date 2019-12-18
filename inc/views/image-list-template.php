@@ -147,6 +147,11 @@
                                         <?php
                                         $media_image = wp_get_attachment_image_src($image->ID, 'thumbnail');
 
+                                        $full_size_media_image = wp_get_attachment_image_src($image->ID, 'full');
+                                        //getting backup url
+                                        $upload_dir = wp_upload_dir();
+                                        $backup_image_url = $upload_dir['baseurl'] . '/crushed-backup/'.basename( $full_size_media_image[0] );
+                                
                                         if (!empty($media_image)) {
 
                                             $media_image_url = $media_image[0];
@@ -155,11 +160,20 @@
                                             $media_image_url = 'https://appstaging.crush.pics/assets/icn-placeholder-c4f67b922e194a94c8a78078015f9a18c3569a8c674b6ad6af3c7a0f23a39e4b.svg';
                                         }
                                         ?>
-
+ 
                                         <div class="d-flex flex-row align-items-center">
 
+                                        <?php if ($image->status == 'crushed' && $full_size_media_image ):  ?>
+                                       
+                                        <a class="image-preview-link text-decoration-none"  data-toggle="tooltip" data-placement="top"  title="Open image preview"  data-before="<?php echo $full_size_media_image[0]; ?>" data-after="<?php echo $backup_image_url; ?>"   href="#">
+
+                                            <img class="mr-2" src="<?php echo $media_image_url; ?>" width="37" height="37">
+                                        </a>
+                                        <?php else: ?>
                                             <img class="mr-2" src="<?php echo $media_image_url; ?>" width="37" height="37">
 
+                                        <?php endif; ?>
+                                        
                                                 <?php
                                                 $full_image_name = wp_basename($image->guid);
                                                 //($image->status == 'error' && $has_restored && !empty($compression_backup) )
@@ -1162,4 +1176,19 @@
     </div>
 
 
+</div>
+
+<!-- compare image preview -->
+<div class="modal fade" tabindex="-1" role="dialog" id="image-preview-modal">
+<div class="modal-dialog modal-lg" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<h1 class="modal-title"></h1>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="modal-body"></div>
+</div>
+</div>
 </div>
