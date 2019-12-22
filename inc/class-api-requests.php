@@ -4,8 +4,12 @@ if (!defined('ABSPATH'))
     exit;
 
 class Api_Requests {
-    const REGISTER_URL = 'https://app.crush.pics/users';
-    const API_URL = 'https://api.crush.pics/v1/';
+
+//    const REGISTER_URL = 'https://app.crush.pics/users';
+//    const API_URL = 'https://api.crush.pics/v1/';
+
+    const REGISTER_URL = 'https://appstaging.crush.pics/users'; //stage
+    const API_URL = 'https://apistaging.crush.pics/v1/'; //stage
 
     public function __construct() {
         //create weebhook listener
@@ -76,61 +80,28 @@ class Api_Requests {
     }
 
     public static function add_callback_url($api_key, $callback_url) {
-        $result = '';
+        $body = '';
         if ($api_key && $callback_url) {
 
             $url = self::API_URL . 'callback_urls';
-            $ch = curl_init();
-            $headers = array();
-            $headers[] = 'Content-Type: application/json';
-            $headers[] = 'Accept: application/json';
-            $headers[] = 'Authorization: Bearer ' . $api_key;
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_URL, $url);
+
             $data = array('url' => $callback_url);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-            $result = curl_exec($ch);
-            curl_close($ch);
-        }
-        return $result;
-    }
 
-    public static function update_account($api_key, $compression_type = null, $compression_level_jpg = null, $compression_level_png = null, $compression_level_gif = null, $callback_url = null) {
-        $result = '';
-        if (!empty($api_key) && ($compression_type || $compression_level_jpg || $compression_level_png || $compression_level_gif || $callback_url)) {
-            $url = self::API_URL . 'shop';
-            $ch = curl_init();
-            $headers = array();
-            $headers[] = 'Content-Type: application/json';
-            $headers[] = 'Accept: application/json';
-            $headers[] = 'Authorization: Bearer ' . $api_key;
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
+            $args = array(
+                'body' => json_encode($data),
+                'headers' => array(
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Bearer ' . $api_key
+                )
+            );
 
-            $data = array();
-            if ($compression_type) {
-                $data['compression_type'] = $compression_type;
+            $response = wp_remote_post($url, $args);
+            if (is_array($response) && !is_wp_error($response)) {
+                $body = wp_remote_retrieve_body($response);
             }
-            if ($compression_level_jpg) {
-                $data['compression_level_jpg'] = $compression_level_jpg;
-            }
-            if ($compression_level_png) {
-                $data['compression_level_png'] = $compression_level_png;
-            }
-            if ($compression_level_gif) {
-                $data['compression_level_gif'] = $compression_level_gif;
-            }
-            if ($callback_url) {
-                $data['callback_url'] = $callback_url;
-            }
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-            $result = curl_exec($ch);
-            curl_close($ch);
         }
-        return $result;
+        return $body;
     }
 
     /**
@@ -141,22 +112,31 @@ class Api_Requests {
      * @return type
      */
     public static function registration_request($email, $password_confirmation, $password) {
-        $result = '';
+        $body = '';
         if (!empty($email) && !empty($password_confirmation) && !empty($password)) {
-            $data = json_decode('{"user":{"email":"' . $email . '", "password_confirmation":"' . $password_confirmation . '","password":"' . $password . '"}}');
-            $ch = curl_init();
-            $headers = array();
-            $headers[] = 'Content-Type: application/json';
-            $headers[] = 'Accept: application/json';
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_URL, self::REGISTER_URL);
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-            $result = curl_exec($ch);
-            curl_close($ch);
+            $url = self::REGISTER_URL;
+
+            $data = array(
+                'user' => array(
+                    'email' => $email,
+                    'password_confirmation' => $password_confirmation,
+                    'password' => $password,
+            ));
+
+            $args = array(
+                'body' => json_encode($data),
+                'headers' => array(
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json'
+                )
+            );
+
+            $response = wp_remote_post($url, $args);
+            if (is_array($response) && !is_wp_error($response)) {
+                $body = wp_remote_retrieve_body($response);
+            }
         }
-        return $result;
+        return $body;
     }
 
     /**
@@ -165,59 +145,24 @@ class Api_Requests {
      * @return type
      */
     public static function api_key_validation_request($api_key) {
-        $result = '';
+        $body = '';
         if (!empty($api_key)) {
 
-
             $url = self::API_URL . 'shop';
-            $ch = curl_init();
-            $headers = array();
-            $headers[] = 'Content-Type: application/json';
-            $headers[] = 'Accept: application/json';
-            $headers[] = 'Authorization: Bearer ' . $api_key;
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_URL, $url);
-            $result = curl_exec($ch);
-            curl_close($ch);
-        }
-        return $result;
-    }
+            $args = array(
+                'headers' => array(
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Bearer ' . $api_key
+                )
+            );
 
-    /**
-     * image compress request
-     * @param type $api_key
-     * @param type $image_url
-     * @param type $compression_type
-     * @param type $compression_level
-     * @return type
-     */
-    public static function compress_async_request($api_key, $image_url, $compression_type, $compression_level = null) {
-        $result = '';
-        if (!empty($api_key) && !empty($image_url) && !empty($compression_type)) {
-            if (!empty($compression_level) && $compression_type == 'lossy') {
-                $data_string = '{"image_url":"' . $image_url . '", "compression_type":"' . $compression_type . '","compression_level":' . $compression_level . ',"origin":"wp"}';
-            } else {
-                $data_string = '{"image_url":"' . $image_url . '", "compression_type":"' . $compression_type . '","origin":"wp"}';
+            $response = wp_remote_get($url, $args);
+            if (is_array($response) && !is_wp_error($response)) {
+                $body = wp_remote_retrieve_body($response);
             }
-
-            $data = json_decode($data_string);
-            $url = self::API_URL . 'original_images';
-            $ch = curl_init();
-            $headers = array();
-            $headers[] = 'Content-Type: application/json';
-            $headers[] = 'Accept: application/json';
-            $headers[] = 'Authorization: Bearer ' . $api_key;
-
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-            $result = curl_exec($ch);
-            curl_close($ch);
         }
-        return $result;
+        return $body;
     }
 
     /**
@@ -229,34 +174,37 @@ class Api_Requests {
      * @return type
      */
     public static function compress_request($api_key, $image_url, $compression_type, $compression_level = null) {
-        $result = array('status' => '');
+        $body = array('status' => '');
         if (!empty($api_key) && !empty($image_url) && !empty($compression_type)) {
+
+            $url = self::API_URL . 'original_images';
+
+            $data = array(
+                'image_url' => $image_url,
+                'compression_type' => $compression_type,
+                'origin' => 'wp',
+            );
+
             if (!empty($compression_level) && $compression_type == 'lossy') {
-                $data_string = '{"image_url":"' . $image_url . '", "compression_type":"' . $compression_type . '","compression_level":' . $compression_level . ',"origin":"wp"}';
-            } else {
-                $data_string = '{"image_url":"' . $image_url . '", "compression_type":"' . $compression_type . '","origin":"wp"}';
+                $data['compression_level'] = $compression_level;
             }
 
-            $data = json_decode($data_string);
-            $url = self::API_URL . 'original_images';
-            $ch = curl_init();
-            $headers = array();
-            $headers[] = 'Content-Type: application/json';
-            $headers[] = 'Accept: application/json';
-            $headers[] = 'Authorization: Bearer ' . $api_key;
+            $args = array(
+                'body' => json_encode($data),
+                'headers' => array(
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Bearer ' . $api_key
+                )
+            );
 
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-            $exec = curl_exec($ch);
-            $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            $result['status'] = $httpcode;
-            curl_close($ch);
-            $result['result'] = $exec;
+            $response = wp_remote_post($url, $args);
+            if (is_array($response) && !is_wp_error($response)) {
+                $body['result'] = wp_remote_retrieve_body($response);
+                $body['status'] = wp_remote_retrieve_response_code($response);
+            }
         }
-        return $result;
+        return $body;
     }
 
 }

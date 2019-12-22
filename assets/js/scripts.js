@@ -154,12 +154,6 @@ jQuery(document).ready(function ($) {
         });
     });
 
-
-    $('.compression_quality_close').click(function () {
-        var current = $.featherlight.current();
-        current.close();
-    });
-
     //show api key validate
     $('.wpic_api_key_validate').click(function () {
         $('.wpic_api_key_create_container').fadeOut(500, 'linear', function () {

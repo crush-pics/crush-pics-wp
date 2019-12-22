@@ -342,7 +342,13 @@ class Image_Functions {
         if (!empty($compressed_image_url) && !empty($image_url)) {
             $upload_dir = wp_upload_dir();
             $path = $upload_dir['basedir'] . $image_url;
-            $compressed_image_data = self::get_image_data($compressed_image_url);
+            
+            $compressed_image_data = '';
+            $response = wp_remote_get($compressed_image_url);
+            if (is_array($response) && !is_wp_error($response)) {
+                $compressed_image_data = wp_remote_retrieve_body($response);
+            }  
+            
             if ($backup) {
                 $upload_dir = wp_upload_dir();
                 $filename = basename($path);
@@ -360,22 +366,7 @@ class Image_Functions {
             }
         }
         return $backup_imaged_path;
-    }
-
-    public static function get_image_data($image_url) {
-        $image_data = '';
-        if (!empty($image_url)) {
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $image_url);
-            curl_setopt($ch, CURLOPT_HEADER, 0);
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
-            $image_data = curl_exec($ch);
-            curl_close($ch);
-        }
-        return $image_data;
-    }
+    }    
 
     public static function insert_restored_image($id = '', $size = '', $status = '', $backup_image = '') {
         global $wpdb;

@@ -218,12 +218,10 @@ class Image_Compression_Menu {
 
     public function enqueue_admin_script($hook) {
         if ($hook == 'toplevel_page_crush-pics' || $hook == 'crush-pics_page_crush-pics-settings' || $hook == 'toplevel_page_crush-pics-settings') {
-            wp_enqueue_script('wpic_jqui_script', WPIC_URL . 'assets/js/jquery-ui.min.js', array('jquery'), WPIC_VERSION, true);
             wp_enqueue_script('wpic_popper_script', WPIC_URL . 'assets/js/popper.min.js', array('jquery'), WPIC_VERSION, true);
             wp_enqueue_script('wpic_bootstrap_script', WPIC_URL . 'assets/js/bootstrap.min.js', array('jquery'), WPIC_VERSION, true);
+            
             wp_enqueue_style('wpic_jqui_style', WPIC_URL . 'assets/css/jquery-ui.min.css', array(), WPIC_VERSION);
-
-
             wp_enqueue_style('wpic_borealis_style', WPIC_URL . 'assets/css/borealis-theme.min.css', array(), WPIC_VERSION);
             wp_enqueue_style('wpic_style', WPIC_URL . 'assets/css/styles.css', array(), WPIC_VERSION);
 
@@ -233,7 +231,7 @@ class Image_Compression_Menu {
 
 
 
-            wp_enqueue_script('wpic_script', WPIC_URL . 'assets/js/scripts.js', array('jquery'), WPIC_VERSION, true);
+            wp_enqueue_script('wpic_script', WPIC_URL . 'assets/js/scripts.js', array('jquery','jquery-ui-slider'), WPIC_VERSION, true);
             wp_localize_script('wpic_script', 'wpic', array(
                 'api_key_validate' => __('Checking API Key', 'wp-image-compression'),
                 'api_key_validate_accepted' => __('API Key Accepted', 'wp-image-compression'),
