@@ -76,7 +76,7 @@
 
                         </div>
 
-                        <input type="text" class="form-control border-0 shadow-none p-2" name="image_term" value="<?php echo $image_term = isset($_GET['image_term']) ? $_GET['image_term'] : ''; ?>" id="image-src-filter" placeholder="Search by file name" aria-describedby="search-addon" aria-label="Search images">
+                        <input type="text" class="form-control border-0 shadow-none p-2" name="image_term" value="<?php echo $image_term; ?>" id="image-src-filter" placeholder="Search by file name" aria-describedby="search-addon" aria-label="Search images">
 
                     </div>
 

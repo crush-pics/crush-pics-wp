@@ -64,15 +64,15 @@ class Image_Compression_Ajax {
     }
 
     public function wpic_change_compression_auto() {
-        $value = esc_attr($_POST['value']);
+        $value = sanitize_text_field($_POST['value']);
         update_option('compression_auto', $value);
         wp_die();
     }
 
     public function wpic_image_compress() {
-        $id = $_POST['id'];
-        $image_url = $_POST['url'];
-        $size = $_POST['size'];
+        $id = absint($_POST['id']);
+        $image_url = esc_url($_POST['url']);
+        $size = sanitize_text_field($_POST['size']);
         $compression_type = get_option('compression_type', 'balanced');
         $response = Image_Functions::compress_image($id, $image_url, $size, $compression_type);
         wp_send_json($response);
@@ -80,9 +80,9 @@ class Image_Compression_Ajax {
     }
 
     public function wpic_single_image_media_compress() {
-        $id = $_POST['id'];
-        $image_url = $_POST['url'];
-        $size = $_POST['size'];
+        $id = absint($_POST['id']);
+        $image_url = esc_url($_POST['url']);
+        $size = sanitize_text_field($_POST['size']);
         if (!empty($id)) {
             $compression_type = get_post_meta($id, 'image_compression_type', true);
         }
@@ -97,34 +97,34 @@ class Image_Compression_Ajax {
 
     public function wpic_image_restore() {
 
-        $id = $_POST['id'];
-        $image_url = $_POST['url'];
-        $size = $_POST['size'];
-        $backup_image = $_POST ['backup_image'];
+        $id = absint($_POST['id']);
+        $image_url = esc_url($_POST['url']);
+        $size = sanitize_text_field($_POST['size']);
+        $backup_image = esc_url($_POST['backup_image']);
         $response = Image_Functions::restore_image($id, $image_url, $size, $backup_image);
         wp_send_json($response);
         wp_die();
     }
 
     public function wpic_image_check_compress() {
-        $crushed_id = $_POST['id'];
+        $crushed_id = absint($_POST['id']);
         $response = Image_Functions::check_image_compress($crushed_id);
         wp_send_json($response);
         wp_die();
     }
 
     function wpic_fill_image_details() {
-        $id = $_POST['id'];
-        $type = $_POST['type'];
-        $size = $_POST['size'];
+        $id = absint($_POST['id']);
+        $type = sanitize_text_field($_POST['type']);
+        $size = sanitize_text_field($_POST['size']);
         $response = Image_Functions::fill_image_details($id, $type, $size);
         wp_send_json($response);
         wp_die();
     }
 
     function wpic_image_check_status() {
-        $id = $_POST['id'];
-        $size = $_POST['size'];
+        $id = absint($_POST['id']);
+        $size = sanitize_text_field($_POST['size']);
         $response = Image_Functions::check_image_status($id, $size);
         wp_send_json($response);
         wp_die();
@@ -168,7 +168,7 @@ class Image_Compression_Ajax {
     }
 
     public function wpic_create_account() {
-        $email = $_POST['email'];
+        $email = sanitize_email($_POST['email']);
         $password = $_POST['password'];
 
         $results = Api_Requests::registration_request($email, $password, $password);
@@ -186,9 +186,9 @@ class Image_Compression_Ajax {
     }
 
     public function wpic_custom_quality_data_save() {
-        $jpeg_quality = $_POST['jpeg_quality'];
-        $png_quality = $_POST['png_quality'];
-        $gif_quality = $_POST['gif_quality'];
+        $jpeg_quality = absint($_POST['jpeg_quality']);
+        $png_quality = absint($_POST['png_quality']);
+        $gif_quality = absint($_POST['gif_quality']);
 
         update_option('compression_type_custom_jpeg', $jpeg_quality);
         update_option('compression_type_custom_png', $png_quality);
@@ -207,10 +207,10 @@ class Image_Compression_Ajax {
 
     function wpic_compression_type_data_save() {
         if (!empty($_POST['id'])) {
-            $post_id = $_POST['id'];
-            update_post_meta($post_id, 'image_compression_type', $_POST['compression_type']);
+            $post_id = absint($_POST['id']);
+            update_post_meta($post_id, 'image_compression_type', sanitize_text_field($_POST['compression_type']));
         }
-        $response = Image_Functions::get_compression_type_text($_POST['compression_type']);
+        $response = Image_Functions::get_compression_type_text(sanitize_text_field($_POST['compression_type']));
         echo $response;
         wp_die();
     }

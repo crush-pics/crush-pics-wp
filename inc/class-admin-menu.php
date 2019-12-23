@@ -81,7 +81,7 @@ class Image_Compression_Menu {
                 $media_count = $media_count->media_count;
             //get latest images
             $paged = isset($_GET['paged']) ? absint($_GET['paged']) : 1;
-            $image_term = isset($_GET['image_term']) ? $_GET['image_term'] : '';
+            $image_term = isset($_GET['image_term']) ? sanitize_text_field($_GET['image_term']) : '';
             $limit = 10;
             $offset = ( $paged - 1 ) * $limit;
             $total_images = Image_Functions::list_all_full_image($image_term);
@@ -145,7 +145,7 @@ class Image_Compression_Menu {
             require_once WPIC_PATH . 'inc/views/dashboard.php';
         } else {
             $is_register_done = isset($_GET['register']) ? true : false;
-            $is_email_exist = isset($_GET['email']) ? $_GET['email'] : false;
+            $is_email_exist = isset($_GET['email']) ? sanitize_email($_GET['email']) : false;
 
             //add api key
             require_once WPIC_PATH . 'inc/views/validate-create-account.php';
