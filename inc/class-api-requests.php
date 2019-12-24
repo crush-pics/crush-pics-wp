@@ -5,11 +5,8 @@ if (!defined('ABSPATH'))
 
 class Api_Requests {
 
-//    const REGISTER_URL = 'https://app.crush.pics/users';
-//    const API_URL = 'https://api.crush.pics/v1/';
-
-    const REGISTER_URL = 'https://appstaging.crush.pics/users'; //stage
-    const API_URL = 'https://apistaging.crush.pics/v1/'; //stage
+   const REGISTER_URL = 'https://app.crush.pics/users';
+   const API_URL = 'https://api.crush.pics/v1/';
 
     public function __construct() {
         //create weebhook listener

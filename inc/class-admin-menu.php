@@ -5,7 +5,7 @@ if (!defined('ABSPATH'))
 
 class Image_Compression_Menu {
 
-    const CRUSH_WEBAPP_URL = 'https://appstaging.crush.pics';
+    const CRUSH_WEBAPP_URL = 'https://app.crush.pics';
 
     public function __construct() {
         //menu items
@@ -220,7 +220,7 @@ class Image_Compression_Menu {
         if ($hook == 'toplevel_page_crush-pics' || $hook == 'crush-pics_page_crush-pics-settings' || $hook == 'toplevel_page_crush-pics-settings') {
             wp_enqueue_script('wpic_popper_script', WPIC_URL . 'assets/js/popper.min.js', array('jquery'), WPIC_VERSION, true);
             wp_enqueue_script('wpic_bootstrap_script', WPIC_URL . 'assets/js/bootstrap.min.js', array('jquery'), WPIC_VERSION, true);
-            
+
             wp_enqueue_style('wpic_jqui_style', WPIC_URL . 'assets/css/jquery-ui.min.css', array(), WPIC_VERSION);
             wp_enqueue_style('wpic_borealis_style', WPIC_URL . 'assets/css/borealis-theme.min.css', array(), WPIC_VERSION);
             wp_enqueue_style('wpic_style', WPIC_URL . 'assets/css/styles.css', array(), WPIC_VERSION);
