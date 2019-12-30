@@ -7,7 +7,23 @@ class Image_Compression {
 
     public function __construct() {
         //create tables
-        register_activation_hook(WPIC_FILE, array($this, 'wp_crush_activation'));
+        register_activation_hook(WPIC_FILE, array($this, 'on_activate'));
+    }
+
+    // Creating tables for all blogs in a WordPress Multisite installation
+    function on_activate( $network_wide ) {
+        global $wpdb;
+        if ( is_multisite() && $network_wide ) {
+            // Get all blogs in the network and activate plugin on each one
+            $blog_ids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
+            foreach ( $blog_ids as $blog_id ) {
+                switch_to_blog( $blog_id );
+                $this->wp_crush_activation();
+                restore_current_blog();
+            }
+        } else {
+            $this->wp_crush_activation();
+        }
     }
 
     public static function wp_crush_activation() {
