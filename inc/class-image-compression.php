@@ -10,6 +10,8 @@ class Image_Compression {
         register_activation_hook(WPIC_FILE, array($this, 'on_activate'));
         // Creating table whenever a new blog is created
         add_action( 'wpmu_new_blog', 'on_create_blog', 10, 6 );
+        // Deleting the table whenever a blog is deleted
+        add_filter( 'wpmu_drop_tables', 'on_delete_blog' );
     }
 
     // Creating tables for all blogs in a WordPress Multisite installation
@@ -93,6 +95,13 @@ class Image_Compression {
             $this->wp_crush_activation();
             restore_current_blog();
         }
+    }
+
+    // Deleting tables whenever a blog is deleted
+    function on_delete_blog( $tables ) {
+        global $wpdb;
+        $tables[] = $wpdb->prefix . 'table_name';
+        return $tables;
     }
 
 }
