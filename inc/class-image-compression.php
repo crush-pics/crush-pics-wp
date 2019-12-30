@@ -8,6 +8,8 @@ class Image_Compression {
     public function __construct() {
         //create tables
         register_activation_hook(WPIC_FILE, array($this, 'on_activate'));
+        // Creating table whenever a new blog is created
+        add_action( 'wpmu_new_blog', 'on_create_blog', 10, 6 );
     }
 
     // Creating tables for all blogs in a WordPress Multisite installation
@@ -82,6 +84,15 @@ class Image_Compression {
         
         //cache/remove images
         Image_Functions::site_image_sizes_handling();
+    }
+
+    // Creating tables whenever a new blog is created
+    function on_create_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
+        if ( is_plugin_active_for_network( 'plugin-name/plugin-name.php' ) ) {
+            switch_to_blog( $blog_id );
+            $this->wp_crush_activation();
+            restore_current_blog();
+        }
     }
 
 }
