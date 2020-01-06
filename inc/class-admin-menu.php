@@ -221,6 +221,15 @@ class Image_Compression_Menu {
             wp_enqueue_script('wpic_popper_script', WPIC_URL . 'assets/js/popper.min.js', array('jquery'), WPIC_VERSION, true);
             wp_enqueue_script('wpic_bootstrap_script', WPIC_URL . 'assets/js/bootstrap.min.js', array('jquery'), WPIC_VERSION, true);
 
+            /* TWENTYTWENTY scripts and styles */
+
+            wp_enqueue_style('wpic_twentytwenty', WPIC_URL . 'assets/css/twentytwenty.css', array(), WPIC_VERSION);
+
+            wp_enqueue_script('wpic_jquery_event_move', WPIC_URL . 'assets/js/jquery.event.move.js', array('jquery'), WPIC_VERSION, true);
+            wp_enqueue_script('wpic_twentytwenty', WPIC_URL . 'assets/js/jquery.twentytwenty.js', array('jquery'), WPIC_VERSION, true);
+
+            /* END */
+
             wp_enqueue_style('wpic_jqui_style', WPIC_URL . 'assets/css/jquery-ui.min.css', array(), WPIC_VERSION);
             wp_enqueue_style('wpic_borealis_style', WPIC_URL . 'assets/css/borealis-theme.min.css', array(), WPIC_VERSION);
             wp_enqueue_style('wpic_style', WPIC_URL . 'assets/css/styles.css', array(), WPIC_VERSION);
