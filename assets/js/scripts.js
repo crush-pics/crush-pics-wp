@@ -1,4 +1,30 @@
 jQuery(document).ready(function ($) {
+
+    // compare functionality
+
+    $( document ).on( "click", ".image-preview-link", function( e ) {
+        e.preventDefault();
+        var t = $( e.currentTarget ),
+            i = t.siblings( ".dashboard-image-name" ).text();
+        return  openPreviewPopup( t.data( "before" ), t.data( "after" ), i );
+    } )
+
+   function openPreviewPopup( e, t, i ) {
+        var n = $( "#image-preview-modal" );
+        if ( n.find( ".modal-title" ).text( i ), void 0 !== e ) {
+            var a = $( '<div class="compare twentytwenty-container"><img src="' + e + '"><img src="' + t + '"></div>' );
+            n.find( ".modal-body" ).html( a ), n.on( "shown.bs.modal", function() {
+                $( window ).trigger( "resize" )
+            } ), $( "#image-preview-modal img" ).on( "load", function() {
+                $( "#image-preview-modal .compare" ).twentytwenty()
+            } )
+        } else {
+            var s = '<img class="img-fluid" src="' + t + '">';
+            n.find( ".modal-body" ).html( s )
+        }
+        n.modal( "show" )
+    }
+
     //dashboard change compression auto
     $('#change_compression_auto').change(function () {
         var value = '';

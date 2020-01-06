@@ -30,7 +30,7 @@ class Image_Functions {
                     $src_image_path = $image_details['image_path'];
                     $saved = '';
                     if ($original_size > $crushed_size) {
-                        $saved = round((($original_size - $crushed_size) / $original_size) * 100, 2);
+                        $saved = round( ( ( (int) $original_size - (int) $crushed_size ) / (int) $original_size ) * (int) 100, (int) 2 );
                     }
                 } else {
                     $original_size = '';
