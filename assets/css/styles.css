@@ -1217,6 +1217,7 @@ textarea.api_key_value {
   top: 15px;
   line-height: 30px;
   margin: 0;
+  font-size: 0.7rem;
 }
 
 .twentytwenty-horizontal .twentytwenty-before-label::before {
