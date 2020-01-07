@@ -1198,3 +1198,42 @@ textarea.api_key_value {
         border-left: 0px !important;
     }
 }
+
+/* Crush.pics twentytwenty theme overwrite */
+
+.twentytwenty-before-label, .twentytwenty-after-label {
+  opacity: 1
+}
+
+.twentytwenty-before-label::before, .twentytwenty-after-label::before {
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  border: 2px solid #fff;
+}
+
+.twentytwenty-horizontal .twentytwenty-before-label::before, .twentytwenty-horizontal .twentytwenty-after-label::before {
+  width: 100px;
+  top: 15px;
+  line-height: 30px;
+  margin: 0;
+}
+
+.twentytwenty-horizontal .twentytwenty-before-label::before {
+  left: 15px;
+}
+
+.twentytwenty-horizontal .twentytwenty-after-label::before {
+  right: 15px;
+}
+
+.twentytwenty-after-label::before {
+  background-color: #bbe5b3;
+  color: #414f3e;
+}
+
+.twentytwenty-handle {
+  background-color: rgba(0,0,0,0.1);
+}
+
+/* Crush.pics twentytwenty theme overwrite end */
