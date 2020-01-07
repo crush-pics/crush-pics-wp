@@ -160,7 +160,7 @@
                                             $media_image_url = 'https://appstaging.crush.pics/assets/icn-placeholder-c4f67b922e194a94c8a78078015f9a18c3569a8c674b6ad6af3c7a0f23a39e4b.svg';
                                         }
                                         ?>
- 
+
                                         <div class="d-flex flex-row align-items-center">
 
                                         <?php if ( $image->status == 'crushed' && $full_size_media_image ):  ?>
@@ -342,7 +342,7 @@
                                             <table class="table mb-0 bg-white rounded border crush_image_sizes">
 
                                                 <tbody>
-                                                    <tr class=" ">                                                     
+                                                    <tr class=" ">
                                                         <td>
                                                             <div class="d-flex flex-row align-items-center">
 
@@ -1150,7 +1150,7 @@
 
                         <li class="page-item d-flex align-items-center">
 
-                            <?php echo $page_link; ?>                                        
+                            <?php echo $page_link; ?>
 
                         </li>
 
@@ -1160,7 +1160,7 @@
 
                         <a class="page-link" href="<?php echo $last_page_link; ?>#all-images-list">
 
-                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-skip-forward"><polygon points="5 4 15 12 5 20 5 4"></polygon><line x1="19" y1="5" x2="19" y2="19"></line></svg> <?php _e('Last', 'wp-image-compression'); ?>                               
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-skip-forward"><polygon points="5 4 15 12 5 20 5 4"></polygon><line x1="19" y1="5" x2="19" y2="19"></line></svg> <?php _e('Last', 'wp-image-compression'); ?>
 
                         </a>
 
@@ -1170,7 +1170,7 @@
 
                 <?php
             }
-            ?>                        
+            ?>
         </nav>
 
     </div>
@@ -1183,7 +1183,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title"></h1>
+                <h2 class="modal-title"></h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
