@@ -164,11 +164,14 @@
                                         <div class="d-flex flex-row align-items-center">
 
                                         <?php if ( $image->status == 'crushed' && $full_size_media_image ):  ?>
-                                            <a class="image-preview-link text-decoration-none"  data-toggle="tooltip" data-placement="top"  title="Open image preview"  data-before="<?php echo $full_size_media_image[0]; ?>" data-after="<?php echo $backup_image_url; ?>"   href="#">
+                                            <a class="image-preview-link text-decoration-none" data-toggle="tooltip" data-placement="top" title="Open image preview" data-before="<?php echo $full_size_media_image[0]; ?>" data-after="<?php echo $backup_image_url; ?>" href="#">
                                                 <img class="mr-2" src="<?php echo $media_image_url; ?>" width="37" height="37">
                                             </a>
                                         <?php else: ?>
-                                            <img class="mr-2" src="<?php echo $media_image_url; ?>" width="37" height="37">
+                                            <a class="image-preview-link text-decoration-none" data-toggle="tooltip" data-placement="top" title="Open image preview" href="#" style="display:none;">
+                                                <img class="mr-2" src="<?php echo $media_image_url; ?>" width="37" height="37">
+                                            </a>
+                                            <img class="mr-2 image-item" src="<?php echo $media_image_url; ?>" width="37" height="37">
                                         <?php endif; ?>
 
                                                 <?php
