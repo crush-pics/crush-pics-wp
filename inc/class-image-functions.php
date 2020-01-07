@@ -212,6 +212,7 @@ class Image_Functions {
         if (!empty($crushed_id)) {
             $image_details = self::get_crushed_image_details($crushed_id);
             if (!empty($image_details) && !empty($image_details['action'])) {
+                $upload_dir = wp_upload_dir();
                 if ($image_details['action'] == 'error') {
                     $response['status'] = $image_details['action'];
                 } elseif ($image_details['action'] == 'crushed') {
@@ -219,7 +220,6 @@ class Image_Functions {
                     if (!empty($image_details['backup_image'])) {
                         $compression_backup = get_option('compression_backup');
                         if (!empty($compression_backup)) {
-                            $upload_dir = wp_upload_dir();
                             $response['backup'] = 'yes';
                             $response['image_backup_path'] = $image_details['backup_image'];
                             $response['image_url'] = $upload_dir['baseurl'] . $image_details['image_path'];
@@ -231,6 +231,11 @@ class Image_Functions {
                 }
                 $response['image_id'] = $image_details['image_id'];
                 $response['image_size'] = $image_details['image_size'];
+
+                $full_size_media_image = wp_get_attachment_image_src( $response['image_id'], 'full' );
+                // getting backup url
+                $response['backup_image_url'] = $upload_dir['baseurl'] . '/crushed-backup/' . basename( $full_size_media_image[0] );
+                $response['full_size_media_image'] = $full_size_media_image[0];
             }
         }
         return $response;
