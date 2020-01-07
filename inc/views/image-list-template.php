@@ -159,11 +159,16 @@
 
                                             $media_image_url = 'https://appstaging.crush.pics/assets/icn-placeholder-c4f67b922e194a94c8a78078015f9a18c3569a8c674b6ad6af3c7a0f23a39e4b.svg';
                                         }
+
+                                        $data_backup = '';
+
+                                        if (!empty($image->backup_image))
+                                            $data_backup = $image->backup_image;
                                         ?>
 
                                         <div class="d-flex flex-row align-items-center">
 
-                                        <?php if ( $image->status == 'crushed' && $full_size_media_image ):  ?>
+                                        <?php if ( ! empty( $image->status ) && $image->status == 'crushed' && $full_size_media_image && ! empty( $data_backup ) && ! empty( $compression_backup ) ):  ?>
                                             <a class="image-preview-link text-decoration-none" data-toggle="tooltip" data-placement="top" title="Open image preview" data-before="<?php echo $full_size_media_image[0]; ?>" data-after="<?php echo $backup_image_url; ?>" href="#">
                                                 <img class="mr-2" src="<?php echo $media_image_url; ?>" width="37" height="37">
                                             </a>
@@ -257,12 +262,6 @@
                                             <div class=" px-1 mb-0 my-lg-2 crush_action">
 
                                                 <?php
-                                                $data_backup = '';
-
-                                                if (!empty($image->backup_image))
-                                                    $data_backup = $image->backup_image;
-
-
                                                 if (!empty($image->status) && $image->status == 'crushed' && !empty($data_backup) && !empty($compression_backup)) {
                                                     ?>
 

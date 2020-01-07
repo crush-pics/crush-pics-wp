@@ -703,12 +703,14 @@ function check_compress(crushed_id, button) {
                             if (data.image_size == 'full') {
                                 jQuery('tr.parent-details-banner-' + data.image_id).find('.saved-image').css('display', 'inline-flex');
                                 jQuery('tr.parent-details-banner-' + data.image_id).find('.saved-image').text(data.saved);
-                                jQuery('tr.parent-details-banner-' + data.image_id).find('.image-preview-link').attr({
-                                    "data-before" : data.full_size_media_image,
-                                    "data-after" : data.backup_image_url,
-                                });
-                                jQuery('tr.parent-details-banner-' + data.image_id).find('.image-item').hide();
-                                jQuery('tr.parent-details-banner-' + data.image_id).find('.image-preview-link').css('display', 'inline-flex');
+                                if ( data.backup == 'yes' ) {
+                                    jQuery('tr.parent-details-banner-' + data.image_id).find('.image-preview-link').attr({
+                                        "data-before" : data.image_url,
+                                        "data-after" : data.upload_dir + data.image_backup_path,
+                                    });
+                                    jQuery('tr.parent-details-banner-' + data.image_id).find('.image-item').hide();
+                                    jQuery('tr.parent-details-banner-' + data.image_id).find('.image-preview-link').css('display', 'inline-flex');
+                                }
                             }
                         }
                         update_quota_used_card();

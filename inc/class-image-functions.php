@@ -223,6 +223,7 @@ class Image_Functions {
                             $response['backup'] = 'yes';
                             $response['image_backup_path'] = $image_details['backup_image'];
                             $response['image_url'] = $upload_dir['baseurl'] . $image_details['image_path'];
+                            $response['upload_dir'] = $upload_dir['baseurl'];
                         }
                     } else {
                         $response['backup'] = 'no';
@@ -231,11 +232,6 @@ class Image_Functions {
                 }
                 $response['image_id'] = $image_details['image_id'];
                 $response['image_size'] = $image_details['image_size'];
-
-                $full_size_media_image = wp_get_attachment_image_src( $response['image_id'], 'full' );
-                // getting backup url
-                $response['backup_image_url'] = $upload_dir['baseurl'] . '/crushed-backup/' . basename( $full_size_media_image[0] );
-                $response['full_size_media_image'] = $full_size_media_image[0];
             }
         }
         return $response;
