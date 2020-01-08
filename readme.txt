@@ -29,7 +29,7 @@ Install the app, and a couple of clicks later your work is done. Crush.pics will
 
 ###### SET ONCE AND FORGET IT
 
-Once you’ve set up Crush.pics, never think about image optimisation again. Switch on Automation Mode and Crush.pics will take care of the rest. Any new images will be compressed immediately as you upload them to Wordpress.
+Once you’ve set up Crush.pics, never think about image optimization again. Switch on Automation Mode and Crush.pics will take care of the rest. Any new images will be compressed immediately as you upload them to Wordpress.
 
 ###### SIMPLE TO USE INTERFACE
 
@@ -42,3 +42,16 @@ Don’t take our word for it. Have 25MB of free compression to test out the app.
 ###### QUALITY SUPPORT
 
 We're proud to provide fast, friendly and thorough personal support to all users of [Crush.pics](http://crush.pics). If you have any questions, concerns or suggestions for the app we'll always be happy to help.
+
+
+== Screenshots ==
+
+1. Compress images and speed up your site load time
+
+2. Access all your images from one intuitive dashboard
+
+3. Keep track of every action from the comprehensive image history log
+
+4. Compress images without quality loss
+
+5. Fully automated - all existing and new images compressed automatically
