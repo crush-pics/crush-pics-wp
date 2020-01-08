@@ -2,11 +2,14 @@
 
 /**
  * Plugin Name: Crush.pics - Image Compression and Optimization
+ * Plugin URI: https://crush.pics/platforms/wordpress-plugin
  * Description: Image Compression and Optimization using Crush.pics API
  * Version: 1.8
  * Author: Space Squirrel Ltd.
  * Author URI: https://crush.pics
  * Text Domain: crush-pics-image-compression-optimization
+ * License: GPL v2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
 if (!defined('ABSPATH'))
     exit;
