@@ -10,6 +10,7 @@
  * Text Domain: crush-pics-image-compression-optimization
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Requires PHP: 5.4
  */
 if (!defined('ABSPATH'))
     exit;
