@@ -6,12 +6,6 @@ class Update_Progress {
         add_action('wp_image_compression_progressbar', array($this, 'wp_image_compression_progressbar'));
     }
 
-    public function crush_ll_images() {
-        if (!empty($_GET['action']) && $_GET['action'] == 'crush_all') {
-            $response = Image_Functions::image_compress_all();
-        }
-    }
-
     public function wp_image_compression_progressbar() {
         global $wpdb;
 

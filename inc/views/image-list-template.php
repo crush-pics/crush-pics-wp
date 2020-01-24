@@ -157,7 +157,7 @@
                                             $media_image_url = $media_image[0];
                                         } else {
 
-                                            $media_image_url = 'https://appstaging.crush.pics/assets/icn-placeholder-c4f67b922e194a94c8a78078015f9a18c3569a8c674b6ad6af3c7a0f23a39e4b.svg';
+                                            $media_image_url = WPIC_URL . 'assets/img/icn-placeholder-c4f67b922e194a94c8a78078015f9a18c3569a8c674b6ad6af3c7a0f23a39e4b.svg';
                                         }
 
                                         $data_backup = '';
@@ -716,7 +716,7 @@
                                                                         $media_image_item_url = $media_image_item[0];
                                                                     } else {
 
-                                                                        $media_image_item_url = 'https://appstaging.crush.pics/assets/icn-placeholder-c4f67b922e194a94c8a78078015f9a18c3569a8c674b6ad6af3c7a0f23a39e4b.svg';
+                                                                        $media_image_item_url = WPIC_URL . 'assets/img/icn-placeholder-c4f67b922e194a94c8a78078015f9a18c3569a8c674b6ad6af3c7a0f23a39e4b.svg';
                                                                     }
                                                                     ?>
 

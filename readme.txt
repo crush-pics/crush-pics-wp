@@ -1,5 +1,5 @@
 === Crush.pics Image Optimizer – Image Compression and Optimization ===
-Contributors: crushpics
+Contributors: crushpics, svitozarl
 Tags: image optimizer, optimizer, optimize images, images, optimize, compress, compress images, performance, crush, compression, optimization
 Requires at least: 4.0.0
 Tested up to: 5.3
