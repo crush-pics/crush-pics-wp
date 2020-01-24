@@ -1,6 +1,6 @@
-=== Crush.pics – Image Compression and Optimization ===
+=== Crush.pics Image Optimizer – Image Compression and Optimization ===
 Contributors: crushpics
-Tags: optimize images, images, optimize, compress, compress images, performance, crush, compression, optimization
+Tags: image optimizer, optimizer, optimize images, images, optimize, compress, compress images, performance, crush, compression, optimization
 Requires at least: 4.0.0
 Tested up to: 5.3
 Stable tag: 1.7.8
