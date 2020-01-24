@@ -49,17 +49,19 @@ if ($quota_usage >= $bytes) {
     if (!empty($img_details->backup_image))
         $data_backup = $img_details->backup_image;
 
+    $full_size_media_image = wp_get_attachment_image_src( $img_details->ID, 'full' );
+
 
     if (!empty($img_details->status) && $img_details->status == 'crushed' && !empty($data_backup) && !empty($compression_backup)):
         ?>
 
         <button class="btn btn-secondary btn-sm w-100 wp_image_compress main-card-container" style="display:none;" data-guid="" data-id="" data-size="full"  type="button" data-upgrade = <?php echo $upgrade_plan; ?>><?php _e('Crush image', 'wp-image-compression'); ?></button>
 
-        <button class="btn btn-secondary btn-sm w-100 wp_image_restore" data-backup="<?php echo $data_backup; ?>" data-guid="<?php echo $img_details->guid; ?>" data-id="<?php echo $img_details->ID; ?>" data-size="full" type="button" ><?php _e('Restore original', 'wp-image-compression'); ?></button>
+        <button class="btn btn-secondary btn-sm w-100 wp_image_restore" data-backup="<?php echo $data_backup; ?>" data-guid="<?php echo $full_size_media_image[0]; ?>" data-id="<?php echo $img_details->ID; ?>" data-size="full" type="button" ><?php _e('Restore original', 'wp-image-compression'); ?></button>
 
     <?php elseif (empty($img_details->status) || (!empty($img_details->status) && ($img_details->status == 'restored' || $img_details->status == 'error' || $img_details->status == 'enqueued'))): ?>
 
-        <button class="btn btn-secondary btn-sm w-100 wp_image_compress main-card-container" data-guid="<?php echo $img_details->guid; ?>" data-id="<?php echo $img_details->ID; ?>" data-size="full" data-status="<?php echo $action = !empty($img_details->action) ? $img_details->action : ''; ?>"  type="button" data-upgrade = <?php echo $upgrade_plan; ?>><?php _e('Crush image', 'wp-image-compression'); ?></button>
+        <button class="btn btn-secondary btn-sm w-100 wp_image_compress main-card-container" data-guid="<?php echo $full_size_media_image[0]; ?>" data-id="<?php echo $img_details->ID; ?>" data-size="full" data-status="<?php echo $action = !empty($img_details->action) ? $img_details->action : ''; ?>"  type="button" data-upgrade = <?php echo $upgrade_plan; ?>><?php _e('Crush image', 'wp-image-compression'); ?></button>
 
         <button class="btn btn-secondary btn-sm w-100 wp_image_restore" style="display:none;" data-backup="" data-guid="" data-id="" data-size="full" type="button" ><?php _e('Restore original', 'wp-image-compression'); ?></button>
 

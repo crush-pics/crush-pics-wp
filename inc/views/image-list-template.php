@@ -267,11 +267,11 @@
 
                                                     <button class="btn btn-secondary btn-sm w-100 wp_image_compress" style="display:none;" data-guid="" data-id="" data-size="full"  type="button"><?php _e('Compress', 'wp-image-compression'); ?></button>
 
-                                                    <button class="btn btn-secondary btn-sm w-100 wp_image_restore" data-backup="<?php echo $data_backup; ?>" data-guid="<?php echo $image->guid; ?>" data-id="<?php echo $image->ID; ?>" data-size="full" ><?php _e('Restore', 'wp-image-compression'); ?></button>
+                                                    <button class="btn btn-secondary btn-sm w-100 wp_image_restore" data-backup="<?php echo $data_backup; ?>" data-guid="<?php echo $full_size_media_image[0]; ?>" data-id="<?php echo $image->ID; ?>" data-size="full" ><?php _e('Restore', 'wp-image-compression'); ?></button>
 
                                                 <?php } elseif (empty($image->status) || (!empty($image->status) && ($image->status == 'restored' || $image->status == 'error' || $image->status == 'enqueued'))) { ?>
 
-                                                    <button class="btn btn-secondary btn-sm w-100 wp_image_compress" data-guid="<?php echo $image->guid; ?>" data-id="<?php echo $image->ID; ?>" data-size="full" data-status="<?php echo $action = !empty($image->action) ? $image->action : ''; ?>"  type="button"><?php _e('Compress', 'wp-image-compression'); ?></button>
+                                                    <button class="btn btn-secondary btn-sm w-100 wp_image_compress" data-guid="<?php echo $full_size_media_image[0]; ?>" data-id="<?php echo $image->ID; ?>" data-size="full" data-status="<?php echo $action = !empty($image->action) ? $image->action : ''; ?>"  type="button"><?php _e('Compress', 'wp-image-compression'); ?></button>
 
                                                     <button class="btn btn-secondary btn-sm w-100 wp_image_restore" style="display:none;" data-backup="" data-guid="" data-id="" data-size="full" ><?php _e('Restore', 'wp-image-compression'); ?></button>
 
@@ -437,11 +437,11 @@
 
                                                                         <button class="btn btn-secondary btn-sm w-100 wp_image_compress" style="display:none;" data-guid="" data-id="" data-size="full"  type="button"><?php _e('Compress', 'wp-image-compression'); ?></button>
 
-                                                                        <button class="btn btn-secondary btn-sm w-100 wp_image_restore" data-backup="<?php echo $data_backup; ?>" data-guid="<?php echo $image->guid; ?>" data-id="<?php echo $image->ID; ?>" data-size="full" ><?php _e('Restore', 'wp-image-compression'); ?></button>
+                                                                        <button class="btn btn-secondary btn-sm w-100 wp_image_restore" data-backup="<?php echo $data_backup; ?>" data-guid="<?php echo $full_size_media_image[0]; ?>" data-id="<?php echo $image->ID; ?>" data-size="full" ><?php _e('Restore', 'wp-image-compression'); ?></button>
 
                                                                     <?php } elseif (empty($image->status) || (!empty($image->status) && ($image->status == 'restored' || $image->status == 'error' || $image->status == 'enqueued'))) { ?>
 
-                                                                        <button class="btn btn-secondary btn-sm w-100 wp_image_compress" data-guid="<?php echo $image->guid; ?>" data-id="<?php echo $image->ID; ?>" data-size="full" data-status="<?php echo $action = !empty($image->action) ? $image->action : ''; ?>"  type="button"><?php _e('Compress', 'wp-image-compression'); ?></button>
+                                                                        <button class="btn btn-secondary btn-sm w-100 wp_image_compress" data-guid="<?php echo $full_size_media_image[0]; ?>" data-id="<?php echo $image->ID; ?>" data-size="full" data-status="<?php echo $action = !empty($image->action) ? $image->action : ''; ?>"  type="button"><?php _e('Compress', 'wp-image-compression'); ?></button>
 
                                                                         <button class="btn btn-secondary btn-sm w-100 wp_image_restore" style="display:none;" data-backup="" data-guid="" data-id="" data-size="full" ><?php _e('Restore', 'wp-image-compression'); ?></button>
 
