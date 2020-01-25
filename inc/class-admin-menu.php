@@ -161,6 +161,23 @@ class Image_Compression_Menu {
         register_setting('wpic-plugin-settings-group', 'compression_type_custom_jpeg');
         register_setting('wpic-plugin-settings-group', 'compression_type_custom_png');
         register_setting('wpic-plugin-settings-group', 'compression_type_custom_gif');
+
+        // Bail if no activation redirect
+        if ( ! get_transient( '_welcome_screen_activation_redirect' ) ) {
+            return;
+        }
+
+        // Delete the redirect transient
+        delete_transient( '_welcome_screen_activation_redirect' );
+
+        // Bail if activating from network, or bulk
+        if ( is_network_admin() || isset( $_GET['activate-multi'] ) ) {
+            return;
+        }
+
+        // Redirect to onboarding
+        wp_safe_redirect( add_query_arg( array( 'page' => 'crush-pics' ), admin_url( 'admin.php' ) ) );
+
     }
 
     public function register_plugin_settings_menu_page() {
@@ -258,6 +275,8 @@ class Image_Compression_Menu {
                 'custom_quality_jpeg' => $compression_type_custom_jpeg ? $compression_type_custom_jpeg : 0,
                 'custom_quality_png' => $compression_type_custom_png ? $compression_type_custom_png : 0,
                 'custom_quality_gif' => $compression_type_custom_gif ? $compression_type_custom_gif : 0,
+                'compare_before' => __( 'before', 'wp-image-compression' ),
+                'compare_after' => __( 'after', 'wp-image-compression' ),
             ));
         } elseif ($hook == 'upload.php') {
             $compression_type_custom_jpeg = get_option('compression_type_custom_jpeg');

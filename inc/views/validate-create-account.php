@@ -5,6 +5,28 @@ if (!empty($_GET['email'])) {
     $class = '';
 }
 ?>
+<div class="wpic_welcome_container wpic_page_containter" style="<?php if ( $is_register_done || $is_email_exist ): ?>display: none;<?php endif; ?>">    
+    <div class="m-md-4 m-2">
+        <div class="container-fluid ml-md-n2">
+            <div class="row justify-content-center">
+                <div class="col-md-6 bg-white p-3 p-md-5 py-5">
+                    <div class="px-3 px-md-5">
+                        <img class="mb-5 ml-auto mr-auto d-block pb-3" src="<?php echo WPIC_URL . 'assets/img/crush-pics.svg'; ?>" />
+                        <h1><?php _e( '👋  Greetings from the team at Crush.pics!', 'wp-image-compression' ); ?></h1>
+                        <p><strong class="text-dark"><?php _e( "We're on a mission ", 'wp-image-compression' ); ?></strong><?php _e( "to make the web a faster place and we're excited for you to join us!", 'wp-image-compression' ); ?></p>
+                        <p><strong class="text-dark"><?php _e( 'So far ', 'wp-image-compression' ); ?></strong><?php _e( 'we’ve optimized over ', 'wp-image-compression' ); ?><strong class="text-dark"><?php _e( '100 million ', 'wp-image-compression' ); ?></strong><?php _e( 'images for thousands of businesses worldwide. We be hope you’ll trust us with some of yours next.', 'wp-image-compression' ); ?></p>
+                        <p><?php _e( 'Thanks again for choosing Crush.pics — we really appreciate your business.', 'wp-image-compression' ); ?></p>
+                        <p><?php _e( 'Click ', 'wp-image-compression' ); ?><strong class="text-dark"><?php _e( 'Let’s go! ', 'wp-image-compression' ); ?></strong><?php _e( 'to start our simple two-step setup wizard.', 'wp-image-compression' ); ?></p>
+                        <a href="javascript:void(0)" class="btn btn-primary w-100 wpic_let_s_go"><?php _e( 'Let’s go!', 'wp-image-compression' ); ?></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
 <div class="wpic_api_key_validation_container wpic_page_containter <?php echo $class; ?>" style="<?php if (!$is_register_done && !$is_email_exist): ?>display: none;<?php endif; ?>">    
     <div class="m-md-4 m-2">
         <div class="container-fluid ml-md-n2">
@@ -54,7 +76,7 @@ if (!empty($_GET['email'])) {
     </div>
 </div>
 
-<div class="wpic_api_key_create_container wpic_page_containter" style="<?php if ($is_register_done || $is_email_exist): ?>display: none;<?php endif; ?>">    
+<div class="wpic_api_key_create_container wpic_page_containter" style="display: none;">    
     <div class="m-md-4 m-2">
         <div class="container-fluid ml-md-n2">
             <div class="row justify-content-center">
