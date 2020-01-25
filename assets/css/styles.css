@@ -411,6 +411,27 @@ span.field-tooltip {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
+.wpic_padding_containter {
+    padding: .5rem !important;
+}
+
+.wpic_background_container {
+    background: url("../img/crush-color-bg.png") no-repeat center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    min-height: 821px;
+}
+
+.wpic_greetings {
+    margin-bottom: 1.25em;
+}
+
+.wpic_let_s_go {
+    margin-top: 3.214em;
+}
+
 
 .settings.settings-validator
 {
@@ -534,10 +555,18 @@ form a {
     font-weight: 400;
     letter-spacing: .5px;
 }
-.welcome-form-text , .validate-form-text{
+.welcome-form-text,
+.validate-form-text,
+.welcome-text {
     color: #919EAB;
     font-size: 15px;
     line-height: 22px;
+}
+
+@media ( min-width: 768px ) {
+    .wpic_padding_containter {
+        padding: 1.5rem!important;
+    }
 }
 
 
@@ -1094,6 +1123,49 @@ textarea.api_key_value {
     margin-bottom: 55px;
 }
 
+/* Crush.pics twentytwenty theme overwrite */
+
+.twentytwenty-before-label,
+.twentytwenty-after-label {
+  opacity: 1
+}
+
+.twentytwenty-before-label::before,
+.twentytwenty-after-label::before {
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  border: 2px solid #fff;
+}
+
+.twentytwenty-horizontal .twentytwenty-before-label::before,
+.twentytwenty-horizontal .twentytwenty-after-label::before {
+  width: 100px;
+  top: 15px;
+  line-height: 30px;
+  margin: 0;
+  font-size: 0.7rem;
+}
+
+.twentytwenty-horizontal .twentytwenty-before-label::before {
+  left: 15px;
+}
+
+.twentytwenty-horizontal .twentytwenty-after-label::before {
+  right: 15px;
+}
+
+.twentytwenty-after-label::before {
+  background-color: #bbe5b3;
+  color: #414f3e;
+}
+
+.twentytwenty-handle {
+  background-color: rgba(0,0,0,0.1);
+}
+
+/* Crush.pics twentytwenty theme overwrite end */
+
 @media(min-width:768px) {
     .compression_type_row {
         margin-left: -7.5px;
@@ -1198,43 +1270,3 @@ textarea.api_key_value {
         border-left: 0px !important;
     }
 }
-
-/* Crush.pics twentytwenty theme overwrite */
-
-.twentytwenty-before-label, .twentytwenty-after-label {
-  opacity: 1
-}
-
-.twentytwenty-before-label::before, .twentytwenty-after-label::before {
-  font-weight: 700;
-  text-transform: uppercase;
-  text-align: center;
-  border: 2px solid #fff;
-}
-
-.twentytwenty-horizontal .twentytwenty-before-label::before, .twentytwenty-horizontal .twentytwenty-after-label::before {
-  width: 100px;
-  top: 15px;
-  line-height: 30px;
-  margin: 0;
-  font-size: 0.7rem;
-}
-
-.twentytwenty-horizontal .twentytwenty-before-label::before {
-  left: 15px;
-}
-
-.twentytwenty-horizontal .twentytwenty-after-label::before {
-  right: 15px;
-}
-
-.twentytwenty-after-label::before {
-  background-color: #bbe5b3;
-  color: #414f3e;
-}
-
-.twentytwenty-handle {
-  background-color: rgba(0,0,0,0.1);
-}
-
-/* Crush.pics twentytwenty theme overwrite end */

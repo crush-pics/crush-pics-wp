@@ -29,7 +29,12 @@ class Image_Compression {
             $this->wp_crush_activation();
         }
         
-        set_transient( '_welcome_screen_activation_redirect', true, 30 );
+
+        //check if api activated
+        $api_key = get_option( 'wpic_api_key' );
+        if ( ! $api_key ) {
+            set_transient( '_welcome_screen_activation_redirect', true, 30 );
+        }
     }
 
     public static function wp_crush_activation() {
