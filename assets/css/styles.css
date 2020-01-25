@@ -413,6 +413,7 @@ span.field-tooltip {
 
 .wpic_padding_containter {
     padding: .5rem !important;
+    padding-top: 69px;
 }
 
 .wpic_background_container {
@@ -421,7 +422,7 @@ span.field-tooltip {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    min-height: 821px;
+    min-height: 866px;
 }
 
 .wpic_greetings {
@@ -430,6 +431,24 @@ span.field-tooltip {
 
 .wpic_let_s_go {
     margin-top: 3.214em;
+}
+
+.wpic_email_explanation {
+    margin-left: auto !important;
+    text-decoration: underline;
+}
+
+.wpic_font_size_0_875rem {
+    font-size: .875rem;
+}
+
+.wpic_font_size_0_75rem {
+    font-size: .75rem;
+}
+
+.wpic_email_explanation_line {
+    margin-top: 2.93878em;
+    margin-bottom: 1.63266em;
 }
 
 
