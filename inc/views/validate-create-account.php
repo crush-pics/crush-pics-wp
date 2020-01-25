@@ -93,6 +93,7 @@ if (!empty($_GET['email'])) {
                                     <label for="wpic_email">
                                         <?php _e('Email Address', 'wp-image-compression'); ?>
                                     </label>
+                                    <span data-toggle="tooltip" data-placement="bottom" data-html="true" title="" class="text-muted ml-2 wpic_email_explanation" data-original-title="<div class='text-left py-3'><div class='title wpic_font_size_0_875rem'><b>Why do I need this?</b></div> <div class='body'>We found that enabling direct access to our compression engine ensures the most seamless experience possible, and allows easy access to additional compression quota if you need it</div><hr class='wpic_email_explanation_line'><div class='body wpic_font_size_0_75rem'>* We value your privacy, and will never share your email. You can remove your email from our database at any time by deactivating the plugin.</div></div>" span=""><a class="text-muted ml-2"><?php _e('Why do I need this?', 'wp-image-compression'); ?></a></span>
                                     <input type="email" class="form-control wpic_email" id="wpic_email" aria-describedby="emailHelp"/>                                
                                 </div>
 
