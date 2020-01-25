@@ -6,7 +6,7 @@ jQuery(document).ready(function ($) {
         e.preventDefault();
         var t = $( e.currentTarget ),
             i = t.siblings( ".dashboard-image-name" ).text();
-        return  openPreviewPopup( t.data( "before" ), t.data( "after" ), i );
+        return  openPreviewPopup( t.data( wpic.compare_before ), t.data( wpic.compare_after ), i );
     } )
 
    function openPreviewPopup( e, t, i ) {
@@ -179,6 +179,13 @@ jQuery(document).ready(function ($) {
             }
         });
     });
+
+    // show create account
+    $( '.wpic_let_s_go' ).click( function () {
+        $( '.wpic_welcome_container' ).fadeOut( 500, 'linear', function () {
+            $( '.wpic_api_key_create_container' ).fadeIn( 500 );
+        } );
+    } );
 
     //show api key validate
     $('.wpic_api_key_validate').click(function () {

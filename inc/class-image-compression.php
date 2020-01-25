@@ -28,6 +28,8 @@ class Image_Compression {
         } else {
             $this->wp_crush_activation();
         }
+        
+        set_transient( '_welcome_screen_activation_redirect', true, 30 );
     }
 
     public static function wp_crush_activation() {
