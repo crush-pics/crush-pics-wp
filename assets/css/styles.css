@@ -335,6 +335,13 @@ span.field-tooltip {
 .setting-custom-padding .custom-checkbox:last-child{
     margin-bottom: 0px !important;
 }
+
+.progerss_bar-custom-screen {
+    max-width: 606px;
+    width: 100%;
+    padding: 33px 0 30px;
+}
+
 /*responsive*/
 
 @media (min-width:1300px) {
@@ -388,11 +395,11 @@ span.field-tooltip {
     .validation-content {
         padding: 20px;
     }
-    .wpic_api_key_validation_container .header p, .wpic_api_key_validation_container input.wpic_api_key {
+    .wpic_api_key_validation_container input.wpic_api_key {
         margin-bottom: 30px;
         max-width: none;
     }
-    .wpic_api_key_create_container .wrap>div input[type="password"], .wpic_api_key_create_container .wrap>div input[type="email"], .wpic_api_key_validation_container input.wpic_api_key_submit, .wpic_api_key_create_container input.wpic_create_account_submit, .wpic_api_key_validation_container .wpic_api_key_create, .wpic_api_key_create_container .wpic_api_key_validate {
+    .wpic_api_key_validation_container input.wpic_api_key_submit, .wpic_api_key_create_container input.wpic_create_account_submit, .wpic_api_key_validation_container .wpic_api_key_create, .wpic_api_key_create_container .wpic_api_key_validate {
         max-width: none;
     }
     .custom-cards .col-lg-8 .row>div:last-child ul {
@@ -422,7 +429,102 @@ span.field-tooltip {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    min-height: 866px;
+    min-height: 964px;
+}
+
+.wpic_progerss_bar-step_labels {
+    padding-bottom: 0.8125em;
+    display: flex;
+    justify-content: space-around;
+}
+
+.wpic_progerss_bar-step_labels_col {
+    text-align: center;
+    width: 33.33333%;
+}
+
+.wpic_progerss_bar {
+    margin: 0 auto;
+    padding-left: 0;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+}
+
+.wpic_progerss_bar-step {
+    text-align: center;
+    position: relative;
+    width: 100%;
+}
+
+.wpic_progerss_bar-step:before,
+.wpic_progerss_bar-step:after {
+    content: "";
+    height: 0.0625em;
+    background-color: #919eab;
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    left: -50%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.wpic_progerss_bar-step:first-child:before,
+.wpic_progerss_bar-step:first-child:after {
+    display: none;
+}
+
+.wpic_progerss_bar_icon {
+    width: 0.8125em;
+    height: 0.8125em;
+    background-color: #fff;
+    border-radius: 50%;
+    max-width: 100%;
+    z-index: 10;
+    position: relative;
+    transition: all .375s ease-out;
+    border: 1.4px solid #fff;
+}
+
+.is-current .wpic_progerss_bar_icon {
+    background-color: #131227;
+}
+
+.wpic_progerss_bar_icon_border {
+    width: 1em;
+    height: 1em;
+    background-color: #fff;
+    border-radius: 50%;
+    max-width: 100%;
+    z-index: 10;
+    position: relative;
+    transition: all .375s ease-out;
+    display: inline-block;
+    border: 1.4px solid #919eab;
+}
+
+.wpic_heavy_check_mark {
+    position: absolute;
+    font-size: .5rem;
+    margin-left: -.375em;
+    margin-top: -.1875em;
+}
+
+.wpic_progerss_bar-step_label {
+    display: block;
+    color: #919eab;
+    transition: all .5s ease-out;
+    font-size: .6875rem;
+}
+
+.wpic_progerss_bar-step_label_descr {
+    padding-top: .3125em;
+    font-size: .875rem;
+}
+
+.is-current .wpic_progerss_bar-step_label {
+    color: #fff;
 }
 
 .wpic_greetings {
