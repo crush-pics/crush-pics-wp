@@ -180,10 +180,10 @@ jQuery(document).ready(function ($) {
         });
     });
 
-    // show create account
+    // show validate create account
     $( '.wpic_let_s_go' ).click( function () {
         $( '.wpic_welcome_container' ).fadeOut( 500, 'linear', function () {
-            $( '.wpic_api_key_create_container' ).fadeIn( 500 );
+            $( '.wpic_api_validate_create_container' ).fadeIn( 500 );
         } );
     } );
 
@@ -193,6 +193,12 @@ jQuery(document).ready(function ($) {
             $('.wpic_api_key_validation_container').fadeIn(500);
         });
     });
+
+    // Move to STEP 2
+    $( '.wpic_api_key_validate' ).click( function () {
+        $( ".progerss_bar-custom-screen .is-current" ).removeClass( "is-current" ).parent().children( ".wpic_step_2" ).addClass( "is-current" );
+        $( ".wpic_progerss_bar .wpic_step_1 .wpic_heavy_check_mark" ).css( "display", "inline" );
+    } );
 
     //validate account
     $('.wpic_api_key_submit').click(function () {
@@ -224,6 +230,8 @@ jQuery(document).ready(function ($) {
                     if (data == 'valid') {
                         button.val(wpic.api_key_validate_accepted).removeAttr('disabled');
                         button.parent().find('.api-key-valid').show();
+                        $( ".progerss_bar-custom-screen .is-current" ).removeClass( "is-current" ).parent().children( ".wpic_step_3" ).addClass( "is-current" );
+                        $( ".wpic_progerss_bar .wpic_step_2 .wpic_heavy_check_mark" ).css( "display", "inline" );
                         setTimeout(function () {
                             window.location = '?page=crush-pics-settings&api_key=true';
                         }, 2000);
@@ -243,6 +251,12 @@ jQuery(document).ready(function ($) {
         $('.wpic_api_key_validation_container').fadeOut(500, 'linear', function () {
             $('.wpic_api_key_create_container').fadeIn(500);
         });
+    });
+
+    // Move to STEP 1
+    $( '.wpic_api_key_create' ).click( function () {
+        $( ".progerss_bar-custom-screen .is-current" ).removeClass( "is-current" ).parent().children( ".wpic_step_1" ).addClass( "is-current" );
+        $( ".wpic_progerss_bar .wpic_step_1 .wpic_heavy_check_mark" ).hide();
     });
 
     //creat account
