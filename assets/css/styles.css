@@ -455,6 +455,7 @@ span.field-tooltip {
     text-align: center;
     position: relative;
     width: 100%;
+    height: 20px;
 }
 
 .wpic_progerss_bar-step:before,
@@ -476,15 +477,14 @@ span.field-tooltip {
 }
 
 .wpic_progerss_bar_icon {
-    width: 0.8125em;
-    height: 0.8125em;
+    width: 1.28571em;
+    height: 1.28571em;
     background-color: #fff;
     border-radius: 50%;
     max-width: 100%;
     z-index: 10;
-    position: relative;
     transition: all .375s ease-out;
-    border: 1.4px solid #fff;
+    border: 2px solid #fff;
 }
 
 .is-current .wpic_progerss_bar_icon {
@@ -492,8 +492,6 @@ span.field-tooltip {
 }
 
 .wpic_progerss_bar_icon_border {
-    width: 1em;
-    height: 1em;
     background-color: #fff;
     border-radius: 50%;
     max-width: 100%;
@@ -501,14 +499,15 @@ span.field-tooltip {
     position: relative;
     transition: all .375s ease-out;
     display: inline-block;
-    border: 1.4px solid #919eab;
+    border: 1px solid #919eab;
 }
 
 .wpic_heavy_check_mark {
+    margin: 0;
     position: absolute;
-    font-size: .5rem;
-    margin-left: -.375em;
-    margin-top: -.1875em;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .wpic_progerss_bar-step_label {

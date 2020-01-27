@@ -50,12 +50,12 @@ if (!empty($_GET['email'])) {
                         <ol class="wpic_progerss_bar">
                             <li class="wpic_progerss_bar-step wpic_step_1 <?php if ( ! $is_register_done && ! $is_email_exist ): ?>is-current<?php endif; ?>">
                                 <div class="wpic_progerss_bar_icon_border">
-                                    <div class="wpic_progerss_bar_icon"><span class="wpic_heavy_check_mark" <?php if ( ! $is_register_done && ! $is_email_exist ): ?>style="display: none;"<?php endif; ?>>&#10004;</span></div>
+                                    <div class="wpic_progerss_bar_icon"><img class="wpic_heavy_check_mark" src="<?php echo WPIC_URL . 'assets/img/icn-check.svg'; ?>" <?php if ( ! $is_register_done && ! $is_email_exist ): ?>style="display: none;"<?php endif; ?>/></div>
                                 </div>
                             </li>
                             <li class="wpic_progerss_bar-step wpic_step_2 <?php if ( $is_register_done || $is_email_exist ): ?>is-current<?php endif; ?>">
                                 <div class="wpic_progerss_bar_icon_border">
-                                    <div class="wpic_progerss_bar_icon"><span class="wpic_heavy_check_mark" style="display: none;">&#10004;</span></div>
+                                    <div class="wpic_progerss_bar_icon"><img class="wpic_heavy_check_mark" src="<?php echo WPIC_URL . 'assets/img/icn-check.svg'; ?>" style="display: none;"/></div>
                                 </div>
                             </li>
                             <li class="wpic_progerss_bar-step wpic_step_3">
