@@ -144,9 +144,9 @@ if (!empty($_GET['email'])) {
                                 </div>
                                 <p class="text-muted mt-3 mb-0">
                                     <?php _e( 'By creating a Crush.pics account, you consent to and fully accept our', 'wp-image-compression' ); ?>
-                                    <a href="#" class="text-muted" ><?php _e( 'Privacy Policy', 'wp-image-compression' ); ?></a>
+                                    <a href="https://crush.pics/privacy-policy" class="text-muted" target="_blank"><?php _e( 'Privacy Policy', 'wp-image-compression' ); ?></a>
                                     <?php _e( 'and', 'wp-image-compression' ); ?>
-                                    <a href="#" class="text-muted" ><?php _e( 'Terms of Service', 'wp-image-compression' ); ?></a>.
+                                    <a href="https://crush.pics/terms-of-service" class="text-muted" target="_blank"><?php _e( 'Terms of Service', 'wp-image-compression' ); ?></a>.
                                 </p>
 
                                 <a href="javascript:void(0)" class="d-block text-center font-weight-bold pt-4 wpic_api_key_validate"><?php _e( "Already have an API Key?", 'wp-image-compression' ); ?></a>
