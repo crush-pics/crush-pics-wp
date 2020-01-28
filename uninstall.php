@@ -20,6 +20,25 @@ if ( is_multisite() ) {
 			foreach ( $blogs as $blog ) {
 		        switch_to_blog( $blog['blog_id'] );
 
+		        // delete callback url for blog in a WordPress Multisite
+    			$api_key = get_option( 'wpic_api_key' );
+		        $callback_url = get_option( 'wpic_callback_url' );
+		        if ( $api_key && $callback_url ) {
+
+		            $url = 'https://api.crush.pics/v1/callback_urls/' . $callback_url;
+
+		            $args = array(
+		                'headers' => array(
+		                    'Content-Type' => 'application/json',
+		                    'Accept' => 'application/json',
+		                    'Authorization' => 'Bearer ' . $api_key,
+		                ),
+		                'method'     => 'DELETE',
+		            );
+
+		            wp_remote_request( $url, $args );
+		        }
+
 				delete_option( 'wpic_api_key' );
 				delete_option( 'wpic_plan_data' );
 				delete_option( 'wpic_shop_identifier' );
@@ -63,6 +82,25 @@ if ( is_multisite() ) {
 		$offset += $limit;
 	}
 } else {
+
+    // delete callback url
+	$api_key = get_option( 'wpic_api_key' );
+    $callback_url = get_option( 'wpic_callback_url' );
+    if ( $api_key && $callback_url ) {
+
+        $url = 'https://api.crush.pics/v1/callback_urls/' . $callback_url;
+
+        $args = array(
+            'headers' => array(
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+                'Authorization' => 'Bearer ' . $api_key,
+            ),
+            'method'     => 'DELETE',
+        );
+
+        wp_remote_request( $url, $args );
+    }
 
 	delete_option( 'wpic_api_key' );
 	delete_option( 'wpic_plan_data' );
