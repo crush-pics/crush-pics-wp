@@ -516,6 +516,24 @@ jQuery(document).ready(function ($) {
         }
     });
 
+    // Replace image name
+    $( document ).on( 'click', '.main-details-btn', function () {
+        var button = $( this );
+        var previewLink = button.closest( "tr" ).find( '.image-preview-link' );
+        if ( previewLink.is( ':visible' ) ) {
+            button.closest( "tr" ).find( '.dashboard-image-toggle' ).hide().next().show();
+        }
+    } );
+
+    // Show image name
+    $( document ).on( 'click', '.main-close-btn', function () {
+        var button = $( this );
+        var previewLink = button.closest( "tr" ).find( '.image-preview-link' );
+        if ( previewLink.is( ':visible' ) ) {
+            button.closest( "tr" ).find( '.dashboard-tip' ).hide().parent().find( '.dashboard-image-toggle' ).show();
+        }
+    } );
+
     //hide image details
     $(document).on('click', '.image_close', function () {
         var button = $(this);

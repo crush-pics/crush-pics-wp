@@ -184,7 +184,8 @@
                                                 //($image->status == 'error' && $has_restored && !empty($compression_backup) )
                                                 ?>
 
-                                                <span class="text-muted align-middle dashboard-image-name"><?php echo $full_image_name; ?></span>
+                                                <span class="text-muted align-middle dashboard-image-name dashboard-image-toggle"><?php echo $full_image_name; ?></span>
+                                                <span class="text-muted align-middle dashboard-image-name dashboard-tip" style="display: none;"><?php _e( 'CLICK THUMBNAIL TO SEE THE IMAGE', 'wp-image-compression' ); ?></span>
 
                                         </div>
 
@@ -287,9 +288,9 @@
 
                                             <div class=" px-1 mb-0 my-lg-2 crush_action">
 
-                                                <button class="btn btn-secondary btn-sm w-100 image_details" data-size="full" data-id="<?php echo $image->ID; ?>"><?php _e('Details', 'wp-image-compression'); ?></button>
+                                                <button class="btn btn-secondary btn-sm w-100 image_details main-details-btn" data-size="full" data-id="<?php echo $image->ID; ?>"><?php _e('Details', 'wp-image-compression'); ?></button>
 
-                                                <button class="btn btn-secondary btn-sm w-100 image_close" data-size="full" data-id="<?php echo $image->ID; ?>" style="display:none;"><?php _e('Close', 'wp-image-compression'); ?></button>
+                                                <button class="btn btn-secondary btn-sm w-100 image_close main-close-btn" data-size="full" data-id="<?php echo $image->ID; ?>" style="display:none;"><?php _e('Close', 'wp-image-compression'); ?></button>
 
                                             </div>
 
