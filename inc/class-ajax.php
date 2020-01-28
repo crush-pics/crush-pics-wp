@@ -150,14 +150,17 @@ class Image_Compression_Ajax {
             } else {
                 delete_option('quota_end');
             }
+
+            //update callback url
+            $callback_url = Api_Requests::add_callback_url( $api_key, get_rest_url( null, 'crush/webhook' ) );
+            $callback_url = json_decode( $callback_url, true );
+
             //save options
             update_option('wpic_api_key', $api_key);
             update_option('wpic_shop_identifier', $results['shop']['login']);
             update_option('wpic_plan_data', $results['shop']['plan_data']);
             update_option('wpic_plan_next_charge', $results['shop']['next_charge_at']);
-
-            //update callback url
-            Api_Requests::add_callback_url($api_key, get_rest_url(null, 'crush/webhook'));
+            update_option( 'wpic_callback_url', $callback_url['callback_url']['id'] );
 
             echo 'valid';
         } else {
