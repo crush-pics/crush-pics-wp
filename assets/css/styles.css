@@ -1180,6 +1180,10 @@ a.btn, a.btn:hover {
     max-width: 300px;
 }
 
+.dashboard-tip {
+    margin: 0;
+}
+
 .images_table_container #all-images-list li span.border-right {
     border-right: 0px !important;
 }
