@@ -11,38 +11,42 @@ Speed up your site’s load time with Crush.pics easy to use automated image com
 
 == Description ==
 
-Image compression is the process of minimizing the size of an image file without changing the physical dimensions of the image or degrading its visual quality to an unacceptable level. This process is often referred to as "image optimization".
+**<a href="http://crush.pics" target="_blank">Crush.pics</a> is an advanced image optimizer designed to make your images lighter, your website faster and your customers happier — all without any detectable loss to image quality. Worry less about oversized images and more about growing your business**
 
-Compressed images downloaded faster when viewed on a web page. The ability to serve your images quickly is essential to keeping customers on your site and engaged.
+**Why should you try Crush.pics?**
 
-*There’s a lot of image compressors out there, why choose Crush.pics?*
+* We're new to WordPress, but trusted by thousands of businesses worldwide on our other platforms, with <a href="https://apps.shopify.com/crush-pics#reviews" target="_blank">over 500 five-star reviews</a>.
+* The first 25MB is completely free with all premium features unlocked — see exactly what we can do without investing a cent.
+* Zero risk. Your original files are safely backed up and 100% restorable.
+* We genuinely want to see you get the most out of Crush.pics — our dedicated, friendly and 100% human (no robots here) team of optimization experts are happy to work with you.
 
-###### BEST-IN-CLASS COMPRESSION ALGORITHMS
+== Frequently Asked Questions ==
 
-Most apps use the same compression level for every file, we found a better way. Our *Balanced Compression* algorithm calculates the optimal compression level for each file individually. What does this mean for you? The biggest size savings possible while still keeping beautiful, high quality images.
+= Do I need to be an expert to use the plugin? =
+    Absolutely not! We designed Crush.pics to be simple for everyone to use.
 
-We also offer full customization options for advanced users, and a conservative option which will save less space, but keep the image 100% the same as original.
+= How does Crush.pics compare to other image optimization plugins =
+  There are many great options to choose from. Using any of them is a huge step in the right directly which we wholeheartedly support. One major difference; While most plugins use the same compression level for every file, our **Balanced Compression** algorithm calculates the optimal compression level for each file individually. Ultimately resulting in the biggest size savings possible while still keeping beautiful, sharp, high quality images.
 
-###### BULK ACTIONS
+= Can I use the same API Key on multiple web sites? =
+    Yes!
 
-Install the app, and a couple of clicks later your work is done. Crush.pics will process all your images and leave you with a leaner, faster website, better load times and happier customers.
+= Can I optimize my current images and new images? =
+    Yes!
 
-###### SET ONCE AND FORGET IT
+= What image formats does Crush.pics support? =
+    Currently - JPEG, PNG and GIF.
 
-Once you’ve set up Crush.pics, never think about image optimization again. Switch on Automation Mode and Crush.pics will take care of the rest. Any new images will be compressed immediately as you upload them to Wordpress.
+= If I delete the Crush.pics plugin, will my images stay optimised? =
+    Absolutely! Once optimized the images will remain optimized unless you explicitly choose to restore them. But why would you do that? :-)
 
-###### SIMPLE TO USE INTERFACE
+= Can I do a one-time compression of my images? =
+    Of course! Simply select the appropriate plan for your needs, and once your compression is complete simply downgrade to the Free Plan within 30 days. This process will charge your chosen plan's fee one-time.
 
-We designed Crush.pics for simplicity, you don’t need to be an expert on Image Compression and there is no steep learning curve. Just install the app, choose a few basic settings and Crush.pics will do the rest.
+= What if my plan's quota isn't enough? =
+    Crush.pics will notify you if your current plan is unable to compress all your images. To complete the compression of your images you'll need to upgrade to a higher plan, then any remaining images will continue compressing automatically.
 
-###### COMPLETELY FREE TRIAL
-
-Don’t take our word for it. Have 25MB of free compression to test out the app. There’s absolutely no obligation to upgrade. If you’re happy with the results then we have a range of plans available to suit websites of all sizes.
-
-###### QUALITY SUPPORT
-
-We're proud to provide fast, friendly and thorough personal support to all users of [Crush.pics](http://crush.pics). If you have any questions, concerns or suggestions for the app we'll always be happy to help.
-
+= Have more questions? = Great! We have more answers. Contact us at support@spacesquirrel.co
 
 == Screenshots ==
 
