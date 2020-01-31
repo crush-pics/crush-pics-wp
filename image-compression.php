@@ -4,7 +4,7 @@
  * Plugin Name: Crush.pics Image Optimizer – Image Compression and Optimization
  * Plugin URI: https://crush.pics/platforms/wordpress-plugin
  * Description: Image Compression and Optimization using Crush.pics API
- * Version: 1.8.2
+ * Version: 1.8.3
  * Author: Space Squirrel Ltd.
  * Author URI: https://crush.pics
  * Text Domain: crush-pics-image-compression-optimization
@@ -18,7 +18,7 @@ if (!defined('ABSPATH'))
 define('WPIC_URL', plugin_dir_url(__FILE__));
 define('WPIC_PATH', plugin_dir_path(__FILE__));
 define('WPIC_FILE', __FILE__);
-define('WPIC_VERSION', '1.8.2');
+define('WPIC_VERSION', '1.8.3');
 
 //main class
 require_once WPIC_PATH . 'inc/class-image-compression.php';
