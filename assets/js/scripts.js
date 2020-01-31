@@ -486,6 +486,7 @@ jQuery(document).ready(function ($) {
                     button.closest('tr').find('.wp_image_compress').attr('data-id', data.image_id);
                     button.closest('tr').find('.wp_image_compress').attr('data-status', 'restored');
                     button.closest('tr').find('.wp_image_compress').attr('data-size', size);
+                    button.closest( 'tr' ).find( '.dashboard-tip' ).hide().parent().find( '.dashboard-image-toggle' ).show();
                     if (size == 'full') {
                         $('tr.parent-details-banner-' + id).find('.restored-status').css('display', 'inline-flex');
                         $('tr.parent-details-banner-' + id).find('.wp_image_compress').show();
@@ -542,7 +543,7 @@ jQuery(document).ready(function ($) {
         var button = $( this );
         var previewLink = button.closest( "tr" ).find( '.image-preview-link' );
         if ( previewLink.is( ':visible' ) ) {
-            button.closest( "tr" ).find( '.dashboard-image-toggle' ).hide().next().show();
+            button.closest( 'tr' ).find( '.dashboard-image-toggle' ).hide().next().show();
         }
     } );
 
@@ -551,7 +552,7 @@ jQuery(document).ready(function ($) {
         var button = $( this );
         var previewLink = button.closest( "tr" ).find( '.image-preview-link' );
         if ( previewLink.is( ':visible' ) ) {
-            button.closest( "tr" ).find( '.dashboard-tip' ).hide().parent().find( '.dashboard-image-toggle' ).show();
+            button.closest( 'tr' ).find( '.dashboard-tip' ).hide().parent().find( '.dashboard-image-toggle' ).show();
         }
     } );
 
@@ -723,11 +724,15 @@ function check_compress(crushed_id, button) {
                             jQuery('tr.parent-details-banner-' + data.image_id).find('.crushed-status').css('display', 'inline-flex');
                         }
                         if (data.backup == 'yes') {
+                            var mainCloseBtn = button.closest( 'tr' ).find( '.main-close-btn' );
                             button.closest('tr').find('.wp_image_restore').show();
                             button.closest('tr').find('.restored-status').hide();
                             button.closest('tr').find('.wp_image_restore').attr('data-backup', data.image_backup_path);
                             button.closest('tr').find('.wp_image_restore').attr('data-guid', data.image_url);
                             button.closest('tr').find('.wp_image_restore').attr('data-id', data.image_id);
+                            if ( mainCloseBtn.is( ':visible' ) ) {
+                                button.closest( 'tr' ).find( '.dashboard-image-toggle' ).hide().next().show();
+                            }
                             if (data.image_size == 'full') {
                                 jQuery('tr.parent-details-banner-' + data.image_id).find('.wp_image_restore').show();
                                 jQuery('tr.parent-details-banner-' + data.image_id).find('.restored-status').hide();
@@ -743,12 +748,12 @@ function check_compress(crushed_id, button) {
                                 jQuery('tr.parent-details-banner-' + data.image_id).find('.saved-image').css('display', 'inline-flex');
                                 jQuery('tr.parent-details-banner-' + data.image_id).find('.saved-image').text(data.saved);
                                 if ( data.backup == 'yes' ) {
-                                    jQuery('tr.parent-details-banner-' + data.image_id).find('.image-preview-link').attr({
+                                    jQuery( 'tr.parent-details-banner-' + data.image_id ).find( '.image-preview-link' ).attr( {
                                         "data-before" : data.image_url,
                                         "data-after" : data.upload_dir + data.image_backup_path,
-                                    });
-                                    jQuery('tr.parent-details-banner-' + data.image_id).find('.image-item').hide();
-                                    jQuery('tr.parent-details-banner-' + data.image_id).find('.image-preview-link').css('display', 'inline-flex');
+                                    } );
+                                    jQuery( 'tr.parent-details-banner-' + data.image_id ).find( '.image-item' ).hide();
+                                    jQuery( 'tr.parent-details-banner-' + data.image_id ).find( '.image-preview-link' ).css( 'display', 'inline-flex' );
                                 }
                             }
                         }
