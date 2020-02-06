@@ -27,6 +27,11 @@ jQuery(document).ready(function ($) {
         n.modal( "show" );
     }
 
+    $( document ).on( "click", ".upgrade-plan-btn", function() {
+        var redirectModal = $( "#redirect-modal" );
+        redirectModal.modal( "show" );
+    } );
+
     //dashboard change compression auto
     $('#change_compression_auto').change(function () {
         var value = '';
