@@ -185,7 +185,7 @@
                                                 ?>
 
                                                 <span class="text-muted align-middle dashboard-image-name dashboard-image-toggle"><?php echo $full_image_name; ?></span>
-                                                <span class="text-uppercase h5 text-muted font-weight-bold dashboard-tip" style="display: none;"><?php _e( 'CLICK THUMBNAIL TO SEE THE IMAGE', 'wp-image-compression' ); ?></span>
+                                                <span class="text-uppercase h5 text-muted font-weight-bold dashboard-tip" style="display: none;"><?php _e( 'Click thumbnail to see the image', 'wp-image-compression' ); ?></span>
 
                                         </div>
 
