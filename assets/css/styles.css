@@ -187,9 +187,10 @@ span.field-tooltip {
 .crush-image-details {
     padding: 18px 0 12px;
     text-transform: uppercase;
-    font-weight: bold;
-    font-size: 11px;
     color: #909EAC;
+    letter-spacing: .4px;
+    font-size: .75rem;
+    font-weight: 700;
 }
 
 .info-bold-text {
@@ -634,7 +635,9 @@ form a {
 }
 
 .text-uppercase, a {
-    letter-spacing: .5px;
+    letter-spacing: .4px;
+    font-size: .75rem;
+    font-weight: 700;
 }
 
 .custom-line-height {
@@ -763,11 +766,12 @@ form a {
 }
 
 .badge {
-    font-size: 80%;
     padding: 0.25rem 0.5rem;
     font-weight: 700;
     border-radius: .25rem !important;
     text-transform: uppercase;
+    letter-spacing: .4px;
+    font-size: .75rem;
 }
 
 .outline-round {
@@ -854,8 +858,10 @@ form a {
 
 .pagination-with-preloader .first .page-link, .pagination-with-preloader .last .page-link {
     border-radius: 0px;
-    font-size: 11px;
     text-transform: uppercase;
+    letter-spacing: .4px;
+    font-size: .75rem;
+    font-weight: 700;
 }
 
 .pagination-with-preloader .first {
@@ -1223,9 +1229,10 @@ a.btn, a.btn:hover {
     color: #909EAC;
 }
 .custom-image-text{
-    font-size: 11px;
-    font-weight: bold;
     text-transform: uppercase;
+    letter-spacing: .4px;
+    font-size: .75rem;
+    font-weight: 700;
 }
 
 textarea.api_key_value {
@@ -1252,10 +1259,12 @@ textarea.api_key_value {
 
 .twentytwenty-before-label::before,
 .twentytwenty-after-label::before {
-  font-weight: 700;
-  text-transform: uppercase;
-  text-align: center;
-  border: 2px solid #fff;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    border: 2px solid #fff;
+    letter-spacing: .4px;
+    font-size: .75rem;
 }
 
 .twentytwenty-horizontal .twentytwenty-before-label::before,
