@@ -187,7 +187,7 @@ span.field-tooltip {
 .crush-image-details {
     padding: 18px 0 12px;
     text-transform: uppercase;
-    color: #909EAC;
+    color: #919EAB;
     letter-spacing: .4px;
     font-size: .75rem;
     font-weight: 700;
@@ -247,6 +247,10 @@ span.field-tooltip {
     display: block;
     font-weight: normal;
     color: #212B36 !important;
+}
+
+.text-muted {
+    color: #919EAB;
 }
 
 .upgrade-plan-url {
