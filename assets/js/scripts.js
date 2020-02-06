@@ -610,29 +610,6 @@ jQuery(document).ready(function ($) {
     }
 
 });
-function compress_all() {
-    var data = {
-        action: 'wpic_image_compress_all',
-    };
-
-    jQuery.ajax({
-        url: ajaxurl,
-        data: data,
-        type: 'post',
-        success: function (data) {
-            if (data.percent && data.next && data.total) {
-                jQuery("#upload_process").html("<div style='width:" + data.percent + "';background:#40ad6e; ;height:35px;'>&nbsp;</div>");
-                jQuery("#information").html("<div style='text-align:center; font-weight:bold'>" + data.percent + ' is processed ' + data.next + ' is created from ' + data.total + "</div>");
-                jQuery("span.count_total").append("'" + data.percent + "'");
-            }
-            if (data.rest > 0) {
-
-                compress_all();
-            }
-        }, complete: function () {
-        }
-    });
-}
 
 function update_quota_used_card() {
     var data = {
