@@ -1243,6 +1243,24 @@ textarea.api_key_value {
     margin-bottom: 55px;
 }
 
+.page-actions .upgrade-plan-btn {
+    color: #007ace;
+    background-color: transparent;
+    border-top: 0;
+    border-bottom: 0;
+}
+
+.page-actions .upgrade-plan-btn:hover {
+    color: #084e8a;
+    text-decoration: underline;
+}
+
+.page-actions .upgrade-plan-btn:focus,
+.page-actions .upgrade-plan-btn:active {
+    outline: none;
+    box-shadow: none;
+}
+
 /* Crush.pics twentytwenty theme overwrite */
 
 .twentytwenty-before-label,
