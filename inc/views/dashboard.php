@@ -370,7 +370,7 @@
 
                 <h2 class="modal-title" id="EditMoadlTitle"><?php _e('Upgrade Plan', 'wp-image-compression'); ?></h2>
 
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close close-redirect-modal" data-dismiss="modal" aria-label="Close">
 
                     <span aria-hidden="true">&times;</span>
 
@@ -386,7 +386,7 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal"><?php _e('Close', 'wp-image-compression'); ?></button>
+                <button type="button" class="btn btn-secondary close-redirect-modal" data-dismiss="modal"><?php _e('Close', 'wp-image-compression'); ?></button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="window.open('<?php echo $crush_webapp_url; ?>/plans/');"><?php _e('Continue to Web Portal', 'wp-image-compression'); ?></button>
             </div>
 
