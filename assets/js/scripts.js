@@ -32,6 +32,10 @@ jQuery(document).ready(function ($) {
         redirectModal.modal( "show" );
     } );
 
+    $( document ).on( "click", ".close-redirect-modal", function() {
+        location.reload();
+    } );
+
     //dashboard change compression auto
     $('#change_compression_auto').change(function () {
         var value = '';
