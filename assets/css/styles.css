@@ -250,7 +250,7 @@ span.field-tooltip {
 }
 
 .text-muted {
-    color: #919EAB;
+    color: #919EAB !important;
 }
 
 .upgrade-plan-url {
@@ -639,6 +639,10 @@ form a {
 }
 
 .text-uppercase, a {
+    letter-spacing: .5px;
+}
+
+.text-uppercase {
     letter-spacing: .4px;
     font-size: .75rem;
     font-weight: 700;
