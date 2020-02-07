@@ -1261,6 +1261,10 @@ textarea.api_key_value {
     box-shadow: none;
 }
 
+#redirect-modal .modal-body {
+    padding: 2rem 1rem;
+}
+
 /* Crush.pics twentytwenty theme overwrite */
 
 .twentytwenty-before-label,
