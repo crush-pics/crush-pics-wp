@@ -160,7 +160,7 @@
                     <div class="quota-used-card card-body d-flex align-items-center justify-content-center flex-column">
                         <section class="text-center ">
                             <span class="h2 text-muted"><?php _e('Your quota has been exhausted', 'wp-image-compression'); ?></span>
-                            <a href="<?php echo $crush_webapp_url; ?>" class="btn btn-primary btn-md mt-2 upgrade-plan-url" target="_blank" ><?php _e('Upgrade Plan', 'wp-image-compression'); ?></a>
+                            <button class="btn btn-primary btn-md mt-2 upgrade-plan-url upgrade-plan-btn" type="button"><?php _e('Upgrade Plan', 'wp-image-compression'); ?></button>
                         </section>
                     </div>
                 </div>
