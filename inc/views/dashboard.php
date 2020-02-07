@@ -387,7 +387,7 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary close-redirect-modal" data-dismiss="modal"><?php _e('Close', 'wp-image-compression'); ?></button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="window.open('<?php echo $crush_webapp_url; ?>/plans/');"><?php _e('Continue to Web Portal', 'wp-image-compression'); ?></button>
+                <button type="button" class="btn btn-primary" onclick="window.open('<?php echo $crush_webapp_url; ?>/plans/');"><?php _e('Continue to Web Portal', 'wp-image-compression'); ?></button>
             </div>
 
         </div>
