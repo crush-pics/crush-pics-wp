@@ -667,10 +667,10 @@ class Image_Functions {
         global $wpdb;
         $crush_image_actions_table = $wpdb->prefix . 'crush_image_actions';
         $table_image_sizes = $wpdb->prefix . 'crush_image_sizes';
-        $query = "select p.ID,p.guid,p.post_date,(select i.saved from $crush_image_actions_table i where p.ID = i.image_id and i.is_history = 0 and i.image_size = 'full') as saved
-                ,(select i.image_backup_path from $crush_image_actions_table i where p.ID = i.image_id and i.is_history = 0 and i.image_size = 'full') as backup_image
-                ,(select i.action from $crush_image_actions_table i where p.ID = i.image_id and i.is_history = 0 and i.image_size = 'full') as status 
-                ,(select i.image_file_size from $table_image_sizes i where p.ID = i.image_id and i.image_size = 'full') as image_file_size
+        $query = "select p.ID,p.guid,p.post_date,(select i.saved from $crush_image_actions_table i where p.ID = i.image_id and i.is_history = 0 and i.image_size = 'full' LIMIT 1) as saved
+                ,(select i.image_backup_path from $crush_image_actions_table i where p.ID = i.image_id and i.is_history = 0 and i.image_size = 'full' LIMIT 1) as backup_image
+                ,(select i.action from $crush_image_actions_table i where p.ID = i.image_id and i.is_history = 0 and i.image_size = 'full' LIMIT 1) as status 
+                ,(select i.image_file_size from $table_image_sizes i where p.ID = i.image_id and i.image_size = 'full' LIMIT 1) as image_file_size
                 from $wpdb->posts p
                 where
                 p.post_type = 'attachment' and

@@ -35,11 +35,11 @@ class WP_Crush_All_Process extends WP_Background_Process {
         $total = $item['image_total'];
         update_option('crush_total', $total, 'no');
         $table_crush_image_all_sizes = $wpdb->prefix . 'crush_image_all_sizes';
-        $var = $wpdb->insert($table_crush_image_all_sizes, array(
+        $var = $wpdb->replace( $table_crush_image_all_sizes, array(
             'image_id' => $id,
             'image_size' => $size,
             'image_url' => $image_url,
-                ), array('%d', '%s', '%s'));
+                ), array( '%d', '%s', '%s' ) );
         return false;
     }
 
