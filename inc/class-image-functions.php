@@ -857,14 +857,15 @@ class Image_Functions {
 
     public static function image_check_compress_all() {
         $response = array();
-        $status_data = get_option('crush_status');
-        $iteration_data = explode('_', $status_data);
-        $iteration = $iteration_data[0];
-        $total = $iteration_data[1];
-        $percent = intval($iteration / $total * 100) . "%";
-        $response['iteration'] = $iteration;
-        $response['total'] = $total;
-        $response['percent'] = $percent;
+        if ( $status_data = get_option('crush_status') ) {
+            $iteration_data = explode('_', $status_data);
+            $iteration = $iteration_data[0];
+            $total = $iteration_data[1];
+            $percent = intval($iteration / $total * 100) . "%";
+            $response['iteration'] = $iteration;
+            $response['total'] = $total;
+            $response['percent'] = $percent;
+        }
         $response['quota_status'] = get_option('quota_end');
 
         if (!empty(get_option('crush_stop'))) {
