@@ -1135,13 +1135,14 @@ a.btn, a.btn:hover {
 
 .crush_all_container:after {
     content: '';
-    background-color: #ffffff80;
+    background-color: #ffffff;
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
     top: 0;
     z-index: 999;
+    opacity: .92;
 }
 
 .vertical-divider {
@@ -1260,6 +1261,20 @@ textarea.api_key_value {
 }
 .validation-pop-email .validate-custom-screen .btn-outline-primary {
     margin-bottom: 55px;
+}
+.overlay-txt {
+    left: 50%;
+    top: 50%;
+    transform: translate( -50%, -50% );
+    max-width: 449px;
+    z-index: 1000;
+}
+.overlay-txt-header {
+    font-size: 20px;
+}
+.overlay-txt-p {
+    color: #637381;
+    font-size: 14px;
 }
 
 .page-actions .upgrade-plan-btn {

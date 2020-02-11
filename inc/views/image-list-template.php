@@ -1,6 +1,6 @@
 <!-- Start ims list -->
 
-<ul class="list-group list-group-horizontal align-items-center" id="all-images-list">
+<ul class="list-group list-group-horizontal align-items-center counters-list<?php echo $crush_all == 'yes' ? ' d-none' : ''; ?>" id="all-images-list">
 
     <li>
 
@@ -1090,6 +1090,13 @@
             <?php } ?>
 
         </div>
+
+        <?php if ( $crush_all == 'yes' ): ?>
+            <div class="overlay-txt position-absolute text-center">
+                <p class="overlay-txt-header"><?php _e( 'Crushing all images…', 'wp-image-compression' ); ?></p>
+                <p class="overlay-txt-p"><?php _e( 'Feel free to close the app any time during compression. We’ll keep working away in the background and then show full image details here once complete.', 'wp-image-compression' ); ?></p>
+            </div>
+        <?php endif ?>
 
     </div>
     <?php

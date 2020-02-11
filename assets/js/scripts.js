@@ -1056,6 +1056,7 @@ function reload_image_table() {
                 jQuery('.images_table_container').html('');
                 jQuery('.images_table_container').html(data);
                 jQuery('.images_table_container').toggleClass('crush_all_container');
+                jQuery( '.overlay-txt' ).hide();
                 update_quota_used_card();
 //                jQuery('.check_status').each(function () {
 //                    var row = jQuery(this);
