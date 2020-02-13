@@ -243,9 +243,9 @@
     </div>
 
     <!-- Start images -->
-    <?php $crush_all_class = $crush_all == 'yes' ? 'crush_all_container' : ''; ?>
+    <?php $crush_all_class = $crush_all == 'yes' ? ' crush_all_container' : ''; ?>
 
-    <section class="py-4 images_table_container <?php echo $crush_all_class; ?>">
+    <section class="py-4 images_table_container">
 
         <?php include WPIC_PATH . 'inc/views/image-list-template.php'; ?>
 

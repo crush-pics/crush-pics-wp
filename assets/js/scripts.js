@@ -624,7 +624,7 @@ jQuery(document).ready(function ($) {
 
 
     });
-    if ($('.images_table_container').hasClass('crush_all_container')) {
+    if ( $( '.images-table' ).hasClass( 'crush_all_container' ) ) {
         $('.container-count-actions').removeClass('d-block').addClass('d-none');
         var crush_all_interval = setInterval(crush_all_check_status, 1000);
         $('.crush_all').attr('data-interval', crush_all_interval);
@@ -953,7 +953,7 @@ function fill_image_details(id, type, size) {
                     $('.un-crushed-images-no').html(data.un_crushed_images_no);
                     if (parseInt(data.un_crushed_images_no) > 0) {
                         $('.end_compress_container').hide(0, function () {
-                            if (!$('.images_table_container').hasClass('crush_all_container')) {
+                            if ( ! $( '.images-table' ).hasClass( 'crush_all_container' ) ) {
                                 $('.container-count-actions').removeClass('d-none').addClass('d-block');
                             }
                         });
@@ -1055,7 +1055,6 @@ function reload_image_table() {
             if (data) {
                 jQuery('.images_table_container').html('');
                 jQuery('.images_table_container').html(data);
-                jQuery('.images_table_container').toggleClass('crush_all_container');
                 jQuery( '.overlay-txt' ).hide();
                 update_quota_used_card();
 //                jQuery('.check_status').each(function () {

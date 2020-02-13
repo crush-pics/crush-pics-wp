@@ -56,7 +56,7 @@
 
     <div class="col-md-12">
 
-        <div class="card mw-100 py-0 px-0 card-top">
+        <div class="card mw-100 py-0 px-0 card-top images-table<?php echo $crush_all_class; ?>">
 
             <form method="get">
 
@@ -1081,6 +1081,12 @@
                     </table>
 
                 </div>
+                <?php if ( $crush_all == 'yes' ): ?>
+                <div class="overlay-txt position-absolute text-center">
+                    <p class="overlay-txt-header"><?php _e( 'Crushing all images…', 'wp-image-compression' ); ?></p>
+                    <p class="overlay-txt-p"><?php _e( 'Feel free to close the app any time during compression. We’ll keep working away in the background and then show full image details here once complete.', 'wp-image-compression' ); ?></p>
+                </div>
+                <?php endif ?>
             <?php } else { ?>
                 <div class="no-img-result"><img src="<?php echo WPIC_URL . 'assets/img/empty-results.svg'; ?>"/></div>
 
@@ -1090,13 +1096,6 @@
             <?php } ?>
 
         </div>
-
-        <?php if ( $crush_all == 'yes' ): ?>
-            <div class="overlay-txt position-absolute text-center">
-                <p class="overlay-txt-header"><?php _e( 'Crushing all images…', 'wp-image-compression' ); ?></p>
-                <p class="overlay-txt-p"><?php _e( 'Feel free to close the app any time during compression. We’ll keep working away in the background and then show full image details here once complete.', 'wp-image-compression' ); ?></p>
-            </div>
-        <?php endif ?>
 
     </div>
     <?php
@@ -1141,7 +1140,7 @@
             if (!empty($page_links)) {
                 ?>
 
-                <ul class="pagination justify-content-center">
+                <ul class="pagination justify-content-center<?php echo $crush_all_class; ?>">
 
                     <li class="page-item first">
 
