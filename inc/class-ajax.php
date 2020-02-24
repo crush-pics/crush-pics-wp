@@ -160,7 +160,9 @@ class Image_Compression_Ajax {
             update_option('wpic_shop_identifier', $results['shop']['login']);
             update_option('wpic_plan_data', $results['shop']['plan_data']);
             update_option('wpic_plan_next_charge', $results['shop']['next_charge_at']);
-            update_option( 'wpic_callback_url', $callback_url['callback_url']['id'] );
+            if ( array_key_exists( 'callback_url', $callback_url ) ) {
+                update_option( 'wpic_callback_url', $callback_url['callback_url']['id'] );
+            }
 
             echo 'valid';
         } else {

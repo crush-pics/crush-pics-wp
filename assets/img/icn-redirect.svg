@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 62 (91390) - https://sketch.com -->
+    <title>call_split-24px</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Final" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="upgrade-plan-01A" transform="translate(-544.000000, -216.000000)">
+            <g id="Group-30" transform="translate(454.000000, 114.000000)">
+                <g id="call_split-24px" transform="translate(104.181001, 116.500000) rotate(90.000000) translate(-104.181001, -116.500000) translate(83.681001, 96.000000)">
+                    <polygon id="Path" points="0 0 40.8000011 0 40.8000011 40.8000011 0 40.8000011"></polygon>
+                    <path d="M23.8000007,6.80000019 L27.6930008,10.6930003 L22.7970006,15.5890004 L25.2110007,18.0030005 L30.1070008,13.1070004 L34.000001,17.0000005 L34.000001,6.80000019 L23.8000007,6.80000019 Z M17.0000005,6.80000019 L6.80000019,6.80000019 L6.80000019,17.0000005 L10.6930003,13.1070004 L18.7000005,21.0970006 L18.7000005,34.000001 L22.1000006,34.000001 L22.1000006,19.7030006 L13.1070004,10.6930003 L17.0000005,6.80000019 Z" id="Shape" fill="#C4CDD5" fill-rule="nonzero"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

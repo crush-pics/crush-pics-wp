@@ -187,9 +187,10 @@ span.field-tooltip {
 .crush-image-details {
     padding: 18px 0 12px;
     text-transform: uppercase;
-    font-weight: bold;
-    font-size: 11px;
-    color: #909EAC;
+    color: #919EAB;
+    letter-spacing: .4px;
+    font-size: .75rem;
+    font-weight: 700;
 }
 
 .info-bold-text {
@@ -246,6 +247,10 @@ span.field-tooltip {
     display: block;
     font-weight: normal;
     color: #212B36 !important;
+}
+
+.text-muted {
+    color: #919EAB !important;
 }
 
 .upgrade-plan-url {
@@ -637,6 +642,12 @@ form a {
     letter-spacing: .5px;
 }
 
+.text-uppercase {
+    letter-spacing: .4px;
+    font-size: .75rem;
+    font-weight: 700;
+}
+
 .custom-line-height {
     line-height: 27px;
 }
@@ -763,11 +774,12 @@ form a {
 }
 
 .badge {
-    font-size: 80%;
     padding: 0.25rem 0.5rem;
     font-weight: 700;
     border-radius: .25rem !important;
     text-transform: uppercase;
+    letter-spacing: .4px;
+    font-size: .75rem;
 }
 
 .outline-round {
@@ -854,8 +866,10 @@ form a {
 
 .pagination-with-preloader .first .page-link, .pagination-with-preloader .last .page-link {
     border-radius: 0px;
-    font-size: 11px;
     text-transform: uppercase;
+    letter-spacing: .4px;
+    font-size: .75rem;
+    font-weight: 700;
 }
 
 .pagination-with-preloader .first {
@@ -1121,13 +1135,14 @@ a.btn, a.btn:hover {
 
 .crush_all_container:after {
     content: '';
-    background-color: #ffffff80;
+    background-color: #ffffff;
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
     top: 0;
     z-index: 999;
+    opacity: .92;
 }
 
 .vertical-divider {
@@ -1180,6 +1195,10 @@ a.btn, a.btn:hover {
     max-width: 300px;
 }
 
+.dashboard-tip {
+    margin: 0;
+}
+
 .images_table_container #all-images-list li span.border-right {
     border-right: 0px !important;
 }
@@ -1223,9 +1242,10 @@ a.btn, a.btn:hover {
     color: #909EAC;
 }
 .custom-image-text{
-    font-size: 11px;
-    font-weight: bold;
     text-transform: uppercase;
+    letter-spacing: .4px;
+    font-size: .75rem;
+    font-weight: 700;
 }
 
 textarea.api_key_value {
@@ -1242,6 +1262,42 @@ textarea.api_key_value {
 .validation-pop-email .validate-custom-screen .btn-outline-primary {
     margin-bottom: 55px;
 }
+.overlay-txt {
+    left: 50%;
+    top: 50%;
+    transform: translate( -50%, -50% );
+    max-width: 449px;
+    z-index: 1000;
+}
+.overlay-txt-header {
+    font-size: 20px;
+}
+.overlay-txt-p {
+    color: #637381;
+    font-size: 14px;
+}
+
+.page-actions .upgrade-plan-btn {
+    color: #007ace;
+    background-color: transparent;
+    border-top: 0;
+    border-bottom: 0;
+}
+
+.page-actions .upgrade-plan-btn:hover {
+    color: #084e8a;
+    text-decoration: underline;
+}
+
+.page-actions .upgrade-plan-btn:focus,
+.page-actions .upgrade-plan-btn:active {
+    outline: none;
+    box-shadow: none;
+}
+
+#redirect-modal .modal-body {
+    padding: 2rem 1rem;
+}
 
 /* Crush.pics twentytwenty theme overwrite */
 
@@ -1252,10 +1308,12 @@ textarea.api_key_value {
 
 .twentytwenty-before-label::before,
 .twentytwenty-after-label::before {
-  font-weight: 700;
-  text-transform: uppercase;
-  text-align: center;
-  border: 2px solid #fff;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    border: 2px solid #fff;
+    letter-spacing: .4px;
+    font-size: .75rem;
 }
 
 .twentytwenty-horizontal .twentytwenty-before-label::before,

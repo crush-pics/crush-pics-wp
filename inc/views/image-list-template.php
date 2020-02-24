@@ -1,6 +1,6 @@
 <!-- Start ims list -->
 
-<ul class="list-group list-group-horizontal align-items-center" id="all-images-list">
+<ul class="list-group list-group-horizontal align-items-center counters-list<?php echo $crush_all == 'yes' ? ' d-none' : ''; ?>" id="all-images-list">
 
     <li>
 
@@ -56,7 +56,7 @@
 
     <div class="col-md-12">
 
-        <div class="card mw-100 py-0 px-0 card-top">
+        <div class="card mw-100 py-0 px-0 card-top images-table<?php echo $crush_all_class; ?>">
 
             <form method="get">
 
@@ -184,7 +184,8 @@
                                                 //($image->status == 'error' && $has_restored && !empty($compression_backup) )
                                                 ?>
 
-                                                <span class="text-muted align-middle dashboard-image-name"><?php echo $full_image_name; ?></span>
+                                                <span class="text-muted align-middle dashboard-image-name dashboard-image-toggle"><?php echo $full_image_name; ?></span>
+                                                <span class="text-uppercase h5 text-muted font-weight-bold dashboard-tip" style="display: none;"><?php _e( 'Click thumbnail to see the image', 'wp-image-compression' ); ?></span>
 
                                         </div>
 
@@ -287,9 +288,9 @@
 
                                             <div class=" px-1 mb-0 my-lg-2 crush_action">
 
-                                                <button class="btn btn-secondary btn-sm w-100 image_details" data-size="full" data-id="<?php echo $image->ID; ?>"><?php _e('Details', 'wp-image-compression'); ?></button>
+                                                <button class="btn btn-secondary btn-sm w-100 image_details main-details-btn" data-size="full" data-id="<?php echo $image->ID; ?>"><?php _e('Details', 'wp-image-compression'); ?></button>
 
-                                                <button class="btn btn-secondary btn-sm w-100 image_close" data-size="full" data-id="<?php echo $image->ID; ?>" style="display:none;"><?php _e('Close', 'wp-image-compression'); ?></button>
+                                                <button class="btn btn-secondary btn-sm w-100 image_close main-close-btn" data-size="full" data-id="<?php echo $image->ID; ?>" style="display:none;"><?php _e('Close', 'wp-image-compression'); ?></button>
 
                                             </div>
 
@@ -1080,6 +1081,12 @@
                     </table>
 
                 </div>
+                <?php if ( $crush_all == 'yes' ): ?>
+                <div class="overlay-txt position-absolute text-center">
+                    <p class="overlay-txt-header"><?php _e( 'Crushing all images…', 'wp-image-compression' ); ?></p>
+                    <p class="overlay-txt-p"><?php _e( 'Feel free to close the app any time during compression. We’ll keep working away in the background and then show full image details here once complete.', 'wp-image-compression' ); ?></p>
+                </div>
+                <?php endif ?>
             <?php } else { ?>
                 <div class="no-img-result"><img src="<?php echo WPIC_URL . 'assets/img/empty-results.svg'; ?>"/></div>
 
@@ -1133,7 +1140,7 @@
             if (!empty($page_links)) {
                 ?>
 
-                <ul class="pagination justify-content-center">
+                <ul class="pagination justify-content-center<?php echo $crush_all_class; ?>">
 
                     <li class="page-item first">
 

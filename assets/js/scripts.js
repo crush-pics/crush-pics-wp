@@ -7,23 +7,34 @@ jQuery(document).ready(function ($) {
         var t = $( e.currentTarget ),
             i = t.siblings( ".dashboard-image-name" ).text();
         return  openPreviewPopup( t.data( wpic.compare_before ), t.data( wpic.compare_after ), i );
-    } )
+    } );
 
-   function openPreviewPopup( e, t, i ) {
+    function openPreviewPopup( e, t, i ) {
         var n = $( "#image-preview-modal" );
         if ( n.find( ".modal-title" ).text( i ), void 0 !== e ) {
             var a = $( '<div class="compare twentytwenty-container"><img src="' + e + '"><img src="' + t + '"></div>' );
-            n.find( ".modal-body" ).html( a ), n.on( "shown.bs.modal", function() {
-                $( window ).trigger( "resize" )
-            } ), $( "#image-preview-modal img" ).on( "load", function() {
-                $( "#image-preview-modal .compare" ).twentytwenty()
-            } )
+            n.find( ".modal-body" ).html( a );
+            n.on( "shown.bs.modal", function() {
+                $( window ).trigger( "resize" );
+            } );
+            $( "#image-preview-modal img" ).on( "load", function() {
+                $( "#image-preview-modal .compare" ).twentytwenty();
+            } );
         } else {
             var s = '<img class="img-fluid" src="' + t + '">';
-            n.find( ".modal-body" ).html( s )
+            n.find( ".modal-body" ).html( s );
         }
-        n.modal( "show" )
+        n.modal( "show" );
     }
+
+    $( document ).on( "click", ".upgrade-plan-btn", function() {
+        var redirectModal = $( "#redirect-modal" );
+        redirectModal.modal( "show" );
+    } );
+
+    $( document ).on( "click", ".close-redirect-modal", function() {
+        location.reload();
+    } );
 
     //dashboard change compression auto
     $('#change_compression_auto').change(function () {
@@ -486,6 +497,7 @@ jQuery(document).ready(function ($) {
                     button.closest('tr').find('.wp_image_compress').attr('data-id', data.image_id);
                     button.closest('tr').find('.wp_image_compress').attr('data-status', 'restored');
                     button.closest('tr').find('.wp_image_compress').attr('data-size', size);
+                    button.closest( 'tr' ).find( '.dashboard-tip' ).hide().parent().find( '.dashboard-image-toggle' ).show();
                     $( 'tr.parent-details-banner-' + data.image_id ).find( '.image-preview-link' ).hide();
                     $( 'tr.parent-details-banner-' + data.image_id ).find( '.image-item' ).show();
                     if (size == 'full') {
@@ -538,6 +550,24 @@ jQuery(document).ready(function ($) {
             button.closest('.table-image-container').find('tr.item-details-' + id).slideDown();
         }
     });
+
+    // Replace image name
+    $( document ).on( 'click', '.main-details-btn', function () {
+        var button = $( this );
+        var previewLink = button.closest( "tr" ).find( '.image-preview-link' );
+        if ( previewLink.is( ':visible' ) ) {
+            button.closest( 'tr' ).find( '.dashboard-image-toggle' ).hide().next().show();
+        }
+    } );
+
+    // Show image name
+    $( document ).on( 'click', '.main-close-btn', function () {
+        var button = $( this );
+        var previewLink = button.closest( "tr" ).find( '.image-preview-link' );
+        if ( previewLink.is( ':visible' ) ) {
+            button.closest( 'tr' ).find( '.dashboard-tip' ).hide().parent().find( '.dashboard-image-toggle' ).show();
+        }
+    } );
 
     //hide image details
     $(document).on('click', '.image_close', function () {
@@ -596,7 +626,7 @@ jQuery(document).ready(function ($) {
 
 
     });
-    if ($('.images_table_container').hasClass('crush_all_container')) {
+    if ( $( '.images-table' ).hasClass( 'crush_all_container' ) ) {
         $('.container-count-actions').removeClass('d-block').addClass('d-none');
         var crush_all_interval = setInterval(crush_all_check_status, 1000);
         $('.crush_all').attr('data-interval', crush_all_interval);
@@ -612,29 +642,6 @@ jQuery(document).ready(function ($) {
     }
 
 });
-function compress_all() {
-    var data = {
-        action: 'wpic_image_compress_all',
-    };
-
-    jQuery.ajax({
-        url: ajaxurl,
-        data: data,
-        type: 'post',
-        success: function (data) {
-            if (data.percent && data.next && data.total) {
-                jQuery("#upload_process").html("<div style='width:" + data.percent + "';background:#40ad6e; ;height:35px;'>&nbsp;</div>");
-                jQuery("#information").html("<div style='text-align:center; font-weight:bold'>" + data.percent + ' is processed ' + data.next + ' is created from ' + data.total + "</div>");
-                jQuery("span.count_total").append("'" + data.percent + "'");
-            }
-            if (data.rest > 0) {
-
-                compress_all();
-            }
-        }, complete: function () {
-        }
-    });
-}
 
 function update_quota_used_card() {
     var data = {
@@ -707,11 +714,15 @@ function check_compress(crushed_id, button) {
                             jQuery('tr.parent-details-banner-' + data.image_id).find('.crushed-status').css('display', 'inline-flex');
                         }
                         if (data.backup == 'yes') {
+                            var mainCloseBtn = button.closest( 'tr' ).find( '.main-close-btn' );
                             button.closest('tr').find('.wp_image_restore').show();
                             button.closest('tr').find('.restored-status').hide();
                             button.closest('tr').find('.wp_image_restore').attr('data-backup', data.image_backup_path);
                             button.closest('tr').find('.wp_image_restore').attr('data-guid', data.image_url);
                             button.closest('tr').find('.wp_image_restore').attr('data-id', data.image_id);
+                            if ( mainCloseBtn.is( ':visible' ) ) {
+                                button.closest( 'tr' ).find( '.dashboard-image-toggle' ).hide().next().show();
+                            }
                             if (data.image_size == 'full') {
                                 jQuery('tr.parent-details-banner-' + data.image_id).find('.wp_image_restore').show();
                                 jQuery('tr.parent-details-banner-' + data.image_id).find('.restored-status').hide();
@@ -727,12 +738,12 @@ function check_compress(crushed_id, button) {
                                 jQuery('tr.parent-details-banner-' + data.image_id).find('.saved-image').css('display', 'inline-flex');
                                 jQuery('tr.parent-details-banner-' + data.image_id).find('.saved-image').text(data.saved);
                                 if ( data.backup == 'yes' ) {
-                                    jQuery('tr.parent-details-banner-' + data.image_id).find('.image-preview-link').attr({
+                                    jQuery( 'tr.parent-details-banner-' + data.image_id ).find( '.image-preview-link' ).attr( {
                                         "data-before" : data.image_url,
                                         "data-after" : data.upload_dir + data.image_backup_path,
-                                    });
-                                    jQuery('tr.parent-details-banner-' + data.image_id).find('.image-item').hide();
-                                    jQuery('tr.parent-details-banner-' + data.image_id).find('.image-preview-link').css('display', 'inline-flex');
+                                    } );
+                                    jQuery( 'tr.parent-details-banner-' + data.image_id ).find( '.image-item' ).hide();
+                                    jQuery( 'tr.parent-details-banner-' + data.image_id ).find( '.image-preview-link' ).css( 'display', 'inline-flex' );
                                 }
                             }
                         }
@@ -944,7 +955,7 @@ function fill_image_details(id, type, size) {
                     $('.un-crushed-images-no').html(data.un_crushed_images_no);
                     if (parseInt(data.un_crushed_images_no) > 0) {
                         $('.end_compress_container').hide(0, function () {
-                            if (!$('.images_table_container').hasClass('crush_all_container')) {
+                            if ( ! $( '.images-table' ).hasClass( 'crush_all_container' ) ) {
                                 $('.container-count-actions').removeClass('d-none').addClass('d-block');
                             }
                         });
@@ -1046,7 +1057,7 @@ function reload_image_table() {
             if (data) {
                 jQuery('.images_table_container').html('');
                 jQuery('.images_table_container').html(data);
-                jQuery('.images_table_container').toggleClass('crush_all_container');
+                jQuery( '.overlay-txt' ).hide();
                 update_quota_used_card();
 //                jQuery('.check_status').each(function () {
 //                    var row = jQuery(this);

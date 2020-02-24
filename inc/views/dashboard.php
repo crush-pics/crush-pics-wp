@@ -14,11 +14,11 @@
 
         <li>
 
-            <a href="<?php echo $crush_webapp_url; ?>" target="_blank" class="small border-right px-3 text-uppercase font-weight-bold border-left">
+            <button class="small border-right px-3 text-uppercase font-weight-bold border-left upgrade-plan-btn" type="button">
 
                 <?php _e('Upgrade Plan', 'wp-image-compression'); ?>
 
-            </a>
+            </button>
 
         </li>
 
@@ -160,7 +160,7 @@
                     <div class="quota-used-card card-body d-flex align-items-center justify-content-center flex-column">
                         <section class="text-center ">
                             <span class="h2 text-muted"><?php _e('Your quota has been exhausted', 'wp-image-compression'); ?></span>
-                            <a href="<?php echo $crush_webapp_url; ?>" class="btn btn-primary btn-md mt-2 upgrade-plan-url" target="_blank" ><?php _e('Upgrade Plan', 'wp-image-compression'); ?></a>
+                            <button class="btn btn-primary btn-md mt-2 upgrade-plan-url upgrade-plan-btn" type="button"><?php _e('Upgrade Plan', 'wp-image-compression'); ?></button>
                         </section>
                     </div>
                 </div>
@@ -243,9 +243,9 @@
     </div>
 
     <!-- Start images -->
-    <?php $crush_all_class = $crush_all == 'yes' ? 'crush_all_container' : ''; ?>
+    <?php $crush_all_class = $crush_all == 'yes' ? ' crush_all_container' : ''; ?>
 
-    <section class="py-4 images_table_container <?php echo $crush_all_class; ?>">
+    <section class="py-4 images_table_container">
 
         <?php include WPIC_PATH . 'inc/views/image-list-template.php'; ?>
 
@@ -349,7 +349,45 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal"><?php _e('Cancel', 'wp-image-compression'); ?></button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="window.open('<?php echo $crush_webapp_url; ?>');"><?php _e('Explore other plans', 'wp-image-compression'); ?></button>
+                <button type="button" class="btn btn-primary upgrade-plan-btn" data-dismiss="modal"><?php _e('Explore other plans', 'wp-image-compression'); ?></button>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Redirect modal -->
+
+<div class="modal fade" id="redirect-modal" tabindex="-1" role="dialog" aria-labelledby="EditMoadlTitle" aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h2 class="modal-title" id="EditMoadlTitle"><?php _e('Upgrade Plan', 'wp-image-compression'); ?></h2>
+
+                <button type="button" class="close close-redirect-modal" data-dismiss="modal" aria-label="Close">
+
+                    <span aria-hidden="true">&times;</span>
+
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+                <img src="<?php echo WPIC_URL . 'assets/img/icn-wordpress.svg'; ?>" /><img class="ml-2" src="<?php echo WPIC_URL . 'assets/img/icn-redirect.svg'; ?>" /><img class="ml-2" src="<?php echo WPIC_URL . 'assets/img/icn-crushlogo.svg'; ?>" />
+                <p class="mt-4"><?php _e("Redirecting you to our secure ", 'wp-image-compression'); ?><strong class="text-dark"><?php _e("Crush.pics Web Portal", 'wp-image-compression'); ?></strong><?php _e(", where all plan management is handled.", 'wp-image-compression'); ?></p>
+                <p><?php _e("Click ", 'wp-image-compression'); ?><strong class="text-dark"><?php _e("Continue to Web Portal", 'wp-image-compression'); ?></strong><?php _e(" below, then sign in with the email address and password you created when registering this plugin.", 'wp-image-compression'); ?></p>
+                <p class="text-muted"><?php _e("If you can’t remember your password - you’ll be able reset it on the next screen.", 'wp-image-compression'); ?></p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary close-redirect-modal" data-dismiss="modal"><?php _e('Close', 'wp-image-compression'); ?></button>
+                <button type="button" class="btn btn-primary" onclick="window.open('<?php echo $crush_webapp_url; ?>/plans/');"><?php _e('Continue to Web Portal', 'wp-image-compression'); ?></button>
             </div>
 
         </div>
