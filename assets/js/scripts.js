@@ -498,6 +498,8 @@ jQuery(document).ready(function ($) {
                     button.closest('tr').find('.wp_image_compress').attr('data-status', 'restored');
                     button.closest('tr').find('.wp_image_compress').attr('data-size', size);
                     button.closest( 'tr' ).find( '.dashboard-tip' ).hide().parent().find( '.dashboard-image-toggle' ).show();
+                    $( 'tr.parent-details-banner-' + data.image_id ).find( '.image-preview-link' ).hide();
+                    $( 'tr.parent-details-banner-' + data.image_id ).find( '.image-item' ).show();
                     if (size == 'full') {
                         $('tr.parent-details-banner-' + id).find('.restored-status').css('display', 'inline-flex');
                         $('tr.parent-details-banner-' + id).find('.wp_image_compress').show();
