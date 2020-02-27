@@ -27,7 +27,7 @@
 
                             <h2 class="font-weight-bold mb-2"><?php _e('API Key', 'wp-image-compression'); ?></h2>
                             <p class="mb-md-0 display-h3 text-muted">
-                                <?php _e('Something about API Key.', 'wp-image-compression'); ?>
+                                <?php _e('Crush.pics API Key.', 'wp-image-compression'); ?>
                             </p>
 
                         </div>
