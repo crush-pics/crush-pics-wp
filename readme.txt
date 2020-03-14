@@ -2,7 +2,7 @@
 Contributors: crushpics, svitozarl
 Tags: image optimizer, optimizer, optimize images, images, optimize, compress, compress images, performance, crush, compression, optimization
 Requires at least: 4.0.0
-Tested up to: 5.3
+Tested up to: 5.4
 Stable tag: trunk
 License: GPLv2 or later
 License URI: [http://www.gnu.org/licenses/gpl-2.0.html](http://www.gnu.org/licenses/gpl-2.0.html)
