@@ -13,6 +13,8 @@ Speed up your site’s load time with Crush.pics easy to use automated image com
 
 **<a href="http://crush.pics" target="_blank">Crush.pics</a> is an advanced image optimizer designed to make your images lighter, your website faster and your customers happier — all without any detectable loss to image quality. Worry less about oversized images and more about growing your business**
 
+https://www.youtube.com/watch?v=K8PhSs9VXPc
+
 **Why should you try Crush.pics?**
 
 * We're new to WordPress, but trusted by thousands of businesses worldwide on our other platforms, with <a href="https://apps.shopify.com/crush-pics#reviews" target="_blank">over 500 five-star reviews</a>.
