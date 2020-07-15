@@ -53,11 +53,9 @@ if ( is_multisite() ) {
 				// Delete plugin tables on uninstall
 				$crush_image_actions = $wpdb->prefix . 'crush_image_actions';
 				$crush_image_all_sizes = $wpdb->prefix . 'crush_image_all_sizes';
-				$crush_image_sizes = $wpdb->prefix . 'crush_image_sizes';
 
 				$wpdb->query( "DROP TABLE IF EXISTS {$crush_image_actions}" );
 				$wpdb->query( "DROP TABLE IF EXISTS {$crush_image_all_sizes}" );
-				$wpdb->query( "DROP TABLE IF EXISTS {$crush_image_sizes}" );
 
 				// Delete backups
 				$upload_dir = wp_upload_dir();
@@ -111,11 +109,9 @@ if ( is_multisite() ) {
 	// Delete plugin tables on uninstall
 	$crush_image_actions = $wpdb->prefix . 'crush_image_actions';
 	$crush_image_all_sizes = $wpdb->prefix . 'crush_image_all_sizes';
-	$crush_image_sizes = $wpdb->prefix . 'crush_image_sizes';
 
 	$wpdb->query( "DROP TABLE IF EXISTS {$crush_image_actions}" );
 	$wpdb->query( "DROP TABLE IF EXISTS {$crush_image_all_sizes}" );
-	$wpdb->query( "DROP TABLE IF EXISTS {$crush_image_sizes}" );
 
 	// Delete backups
 	$upload_dir = wp_upload_dir();

@@ -30,9 +30,6 @@ class Image_Process {
                     }
                 }
             }
-            //delete image sizes from image sizes table
-            $image_sizes_table = $wpdb->prefix . 'crush_image_sizes';
-            $wpdb->delete($image_sizes_table, array('image_id' => $post_id));
             //delete image sizes from image action table
             $crush_image_actions_table = $wpdb->prefix . 'crush_image_actions';
             $wpdb->delete($crush_image_actions_table, array('image_id' => $post_id));
@@ -41,11 +38,7 @@ class Image_Process {
 
     public function regenerate_image_sizes($data, $attachment_id) {
         if (!empty($data)) {
-            global $wpdb;
             $sql_data = Image_Functions::insert_image_sizes($attachment_id, $data);
-            if (!empty($sql_data) && !empty($sql_data['sql'])) {
-                $wpdb->query($sql_data['sql']);
-            }
             if (!empty($sql_data) && !empty($sql_data['sizes'])) {
                 $old_crushed_sizes = Image_Functions::get_image_crushed_sizes($attachment_id);
                 foreach ($sql_data['sizes'] as $size => $image_url) {

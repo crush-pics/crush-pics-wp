@@ -509,7 +509,7 @@
 
                                                                 <h2 class="card-title display-d original_size_value card-details-title"><?php
                                                                     echo Image_Functions::format_size_units($original_size);
-                                                                    ?></h4>
+                                                                    ?></h2>
 
                                                                     <p class="card-text card-details-text">
 
@@ -919,7 +919,7 @@
 
                                                                         <h2 class="card-title display-d original_size_value card-details-title"><?php
                                                                             echo Image_Functions::format_size_units($item_original_size);
-                                                                            ?></h4>
+                                                                            ?></h2>
 
                                                                             <p class="card-text card-details-text">
 
