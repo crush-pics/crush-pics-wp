@@ -15,33 +15,12 @@ class Media_List_View {
 
     function add_html_to_media_edit_page() {
 
-        global $wpdb, $post;
+        global $post;
         if (!empty($post->ID)) {
             $post_id = $post->ID;
-            $crush_image_actions_table = $wpdb->prefix . 'crush_image_actions';
-            $table_image_sizes = $wpdb->prefix . 'crush_image_sizes';
-            $query = "select p.ID,p.guid,p.post_date,(select i.saved from $crush_image_actions_table i where p.ID = i.image_id and i.is_history = 0 and i.image_size = 'full') as saved
-                ,(select i.image_backup_path from $crush_image_actions_table i where p.ID = i.image_id and i.is_history = 0 and i.image_size = 'full') as backup_image
-                ,(select i.action from $crush_image_actions_table i where p.ID = i.image_id and i.is_history = 0 and i.image_size = 'full') as status
-                ,(select i.image_file_size from $table_image_sizes i where p.ID = i.image_id and i.image_size = 'full') as image_file_size
-                from $wpdb->posts p
-                where
-                p.ID = $post_id";
-            $img_details = $wpdb->get_row($query);
+	        $img_details = self::get_img_details( $post_id );
             $crush_image = WPIC_URL . 'assets/img/crush-pics.svg';
             $loading_image = WPIC_URL . 'assets/img/loading.gif';
-            require WPIC_PATH . 'inc/views/single-media-page.php';
-        }
-    }
-
-    function add_custom_meta_box_single_image() {
-
-        add_meta_box("wpic-media-details", "gggg", array($this, "wpic_media_crush_details"), "attachment", "side", "low");
-    }
-
-    function wpic_media_crush_details($post) {
-        //check if img
-        if (wp_attachment_is_image($post->ID)) {
             require WPIC_PATH . 'inc/views/single-media-page.php';
         }
     }
@@ -140,21 +119,10 @@ class Media_List_View {
         if ('crushpics' !== $column_name) {
             return;
         }
-        global $wpdb;
-        $crush_image_actions_table = $wpdb->prefix . 'crush_image_actions';
 
         //check if img
         if (wp_attachment_is_image($post_id)) {
-            $crush_image_actions_table = $wpdb->prefix . 'crush_image_actions';
-            $table_image_sizes = $wpdb->prefix . 'crush_image_sizes';
-            $query = "select p.ID,p.guid,p.post_date,(select i.saved from $crush_image_actions_table i where p.ID = i.image_id and i.is_history = 0 and i.image_size = 'full') as saved
-                ,(select i.image_backup_path from $crush_image_actions_table i where p.ID = i.image_id and i.is_history = 0 and i.image_size = 'full') as backup_image
-                ,(select i.action from $crush_image_actions_table i where p.ID = i.image_id and i.is_history = 0 and i.image_size = 'full') as status
-                ,(select i.image_file_size from $table_image_sizes i where p.ID = i.image_id and i.image_size = 'full') as image_file_size
-                from $wpdb->posts p
-                where
-                p.ID = $post_id";
-            $img_details = $wpdb->get_row($query);
+	        $img_details = self::get_img_details( $post_id );
             require WPIC_PATH . 'inc/views/media-list.php';
         } else {
             echo '-';
@@ -171,5 +139,33 @@ class Media_List_View {
 		}
 	</style>';
     }
+
+	/**
+	 * @param $post_id
+	 *
+	 * @return array|object|void|null
+	 */
+	private static function get_img_details( $post_id ) {
+	    global $wpdb;
+	    $crush_image_actions_table = $wpdb->prefix . 'crush_image_actions';
+	    $query = "select p.ID,p.guid,p.post_date,(select i.saved from $crush_image_actions_table i where p.ID = i.image_id and i.is_history = 0 and i.image_size = 'full') as saved
+                ,(select i.image_backup_path from $crush_image_actions_table i where p.ID = i.image_id and i.is_history = 0 and i.image_size = 'full') as backup_image
+                ,(select i.action from $crush_image_actions_table i where p.ID = i.image_id and i.is_history = 0 and i.image_size = 'full') as status
+                , ( SELECT ca.original_size FROM $crush_image_actions_table ca WHERE p.ID = ca.image_id AND ca.is_history = 0 AND ca.image_size = 'full' ) AS image_file_size
+                from $wpdb->posts p
+                where
+                p.ID = $post_id";
+	    $img_details = $wpdb->get_row($query);
+	    if ( empty( $img_details->image_file_size ) ) {
+		    $results = $wpdb->get_results(
+			    "SELECT pm.meta_value FROM $wpdb->postmeta pm
+            			WHERE pm.meta_key = '_wp_attachment_metadata' AND pm.post_id = $img_details->ID", OBJECT
+		    );
+		    if ( ! empty( $results ) ) {
+			    $img_details->image_file_size = Image_Functions::get_image_size( $results[0], 'full' );
+		    }
+	    }
+	    return $img_details;
+	}
 
 }

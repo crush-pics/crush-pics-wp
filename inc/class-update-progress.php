@@ -9,25 +9,62 @@ class Update_Progress {
     public function wp_image_compression_progressbar() {
         global $wpdb;
 
-        $images = array();
-        $enabled_sizes = get_option('compression_sizes');
-        if (!$enabled_sizes)
-            $enabled_sizes = array('full');
-        else
-            $enabled_sizes[] = 'full';
-        $crush_image_actions_table = $wpdb->prefix . 'crush_image_actions';
-        $table_image_sizes = $wpdb->prefix . 'crush_image_sizes';
+	    $images_with_sizes         = array();
+        $enabled_sizes             = get_option( 'compression_sizes' );
+	    $crush_image_actions_table = $wpdb->prefix . 'crush_image_actions';
+		$sql = "SELECT p.ID, pm.meta_value, p.guid, p.post_date, ca.saved, ca.is_history, ca.action
+            FROM $wpdb->posts p
+            LEFT JOIN $wpdb->postmeta pm ON p.ID = pm.post_id
+            LEFT JOIN $crush_image_actions_table ca ON p.ID = ca.image_id
+            WHERE p.post_type = 'attachment' AND p.post_status = 'inherit' AND
+            ( p.post_mime_type = 'image/jpeg' OR p.post_mime_type = 'image/gif' OR p.post_mime_type = 'image/png' )
+            AND pm.meta_key = '_wp_attachment_metadata'
+            AND ( ca.is_history = 0 OR ca.is_history IS NULL ) AND ( ca.action IN ( 'restored', 'error' ) OR ca.action IS NULL )";
+        $images = $wpdb->get_results( $sql );
+        if ( ! empty( $images ) ) {
+	        foreach ( $images as $image ) {
+		        $attachment_id   = $image->ID;
+		        $image_with_size = $image;
+		        if ( ! empty( $image->meta_value ) ) {
+			        $data = unserialize( $image->meta_value );
+			        if ( ! empty( $attachment_id ) && ! empty( $data ) ) {
+				        $upload_dir = wp_upload_dir();
 
-        $query = "select p.ID,p.guid,p.post_date,ca.saved,ca.is_history,cs.image_size,ca.action,cs.image_size_path,cs.image_file_size from
-                    $wpdb->posts p
-                    left join $crush_image_actions_table ca on p.ID = ca.image_id
-                    left join $table_image_sizes cs on p.ID = cs.image_id
-                    where p.post_type = 'attachment' and p.post_status = 'inherit' and
-                    (p.post_mime_type = 'image/jpeg' OR p.post_mime_type = 'image/gif' OR p.post_mime_type = 'image/png')
-                    and (ca.is_history = 0 OR ca.is_history Is Null) and (ca.action IN ('restored','error') OR ca.action Is Null)
-                    and cs.image_size IN ('" . implode("', '", $enabled_sizes) . "') ";
+				        //full image path and size
+				        $full_image_path      = $upload_dir['basedir'] . '/' . $data['file'];
+				        $full_image_url       = $upload_dir['baseurl'] . '/' . $data['file'];
+				        $full_image_file_size = filesize( $full_image_path );
+				        $full_image_name      = basename( $full_image_path );
 
-        $crushed_images = $wpdb->get_results($query);
+				        // general dir
+				        $base_dir_path = str_replace( $full_image_name, '', $full_image_path );
+				        $base_dir_url  = str_replace( $full_image_name, '', $full_image_url );
+
+				        $image_with_size->image_size      = 'full';
+				        $image_with_size->image_size_path = $full_image_url;
+				        $image_with_size->image_file_size = $full_image_file_size;
+				        $images_with_sizes[]              = $image_with_size;
+				        if ( $enabled_sizes && ! empty( $data['sizes'] ) ) {
+					        foreach ( $data['sizes'] as $key => $size ) {
+						        if ( in_array( $key, $enabled_sizes ) ) {
+							        //sized image path and size
+							        $sized_file_path = $base_dir_path . $size['file'];
+							        $sized_file_url  = $base_dir_url . $size['file'];
+							        $sized_file_size = filesize( $sized_file_path );
+
+							        $image_with_size->image_size      = $key;
+							        $image_with_size->image_size_path = $sized_file_url;
+							        $image_with_size->image_file_size = $sized_file_size;
+							        $images_with_sizes[]              = $image_with_size;
+						        }
+					        }
+				        }
+                    }
+		        }
+	        }
+        }
+
+        $crushed_images = $images_with_sizes;
         if (!empty($crushed_images)) {
             foreach ($crushed_images as $crushed_image) {
                 $id = $crushed_image->ID . '_' . $crushed_image->image_size;

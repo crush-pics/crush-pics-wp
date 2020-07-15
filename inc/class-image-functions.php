@@ -63,6 +63,7 @@ class Image_Functions {
                 $table_crush_image_all_sizes = $wpdb->prefix . 'crush_image_all_sizes';
                 $wpdb->delete($table_crush_image_all_sizes, array('crushed_id' => $crushed_id));
                 $total_images = get_option('crush_total');
+
                 $uncrushed_count = $wpdb->get_row("select count(id) as uncrushed_count  from $table_crush_image_all_sizes");
                 if ($uncrushed_count)
                     $uncrushed_count = $uncrushed_count->uncrushed_count;
@@ -109,51 +110,20 @@ class Image_Functions {
         }
     }
 
-    public static function get_crushed_image_details($crushed_id, $size = 'full') {
-        $image_details = array();
-        if (!empty($crushed_id) && !empty($size)) {
-            global $wpdb;
-            $crush_image_actions_table = $wpdb->prefix . 'crush_image_actions';
-            $table_image_sizes = $wpdb->prefix . 'crush_image_sizes';
-
-            $results = $wpdb->get_results("SELECT *,(select i.image_file_size from $table_image_sizes i where p.image_id = i.image_id and i.image_size = '$size') as image_file_size FROM $crush_image_actions_table p WHERE p.crushed_id = $crushed_id", OBJECT);
-            if (!empty($results)) {
-                $image_details['size'] = $results[0]->image_file_size;
-                $image_details['image_path'] = $results[0]->image_path;
-                $image_details['crushed_size'] = $results[0]->crushed_size;
-                $image_details['saved'] = $results[0]->saved;
-                $image_details['backup_image'] = $results[0]->image_backup_path;
-                $image_details['image_id'] = $results[0]->image_id;
-                $image_details['action'] = $results[0]->action;
-                $image_details['image_size'] = $results[0]->image_size;
-                $image_details['compression_type'] = $results[0]->compression_type;
-            }
-        }
-        return $image_details;
-    }
-
     public static function get_image_by_crushed_id($crushed_id) {
         $image_details = array();
         if (!empty($crushed_id)) {
             global $wpdb;
             $crush_image_actions_table = $wpdb->prefix . 'crush_image_actions';
-            $table_image_sizes = $wpdb->prefix . 'crush_image_sizes';
 
-            $results = $wpdb->get_results("SELECT * FROM $crush_image_actions_table p WHERE p.crushed_id = $crushed_id", OBJECT);
+            $results = $wpdb->get_results(
+            	"SELECT ca.image_path, ca.crushed_size, ca.saved, ca.image_backup_path, ca.image_id, ca.action,
+       				ca.image_size, ca.compression_type, ca.original_size FROM $crush_image_actions_table ca
+					WHERE ca.crushed_id = $crushed_id", OBJECT
+            );
             if (!empty($results)) {
-                $image_size = $results[0]->image_size;
-                $image_details['image_path'] = $results[0]->image_path;
-                $image_details['crushed_size'] = $results[0]->crushed_size;
-                $image_details['saved'] = $results[0]->saved;
-                $image_details['backup_image'] = $results[0]->image_backup_path;
-                $image_details['image_id'] = $results[0]->image_id;
-                $image_details['action'] = $results[0]->action;
-                $image_details['image_size'] = $results[0]->image_size;
-                $image_details['compression_type'] = $results[0]->compression_type;
-                $image_path_results = $wpdb->get_results("SELECT image_file_size FROM $table_image_sizes p where p.image_id = " . $image_details['image_id'] . " and p.image_size = '$image_size'", OBJECT);
-                if (!empty($image_path_results)) {
-                    $image_details['size'] = $image_path_results[0]->image_file_size;
-                }
+	            $image_details         = self::set_image( $results[0] );
+	            $image_details['size'] = $results[0]->original_size;
             }
         }
         return $image_details;
@@ -164,18 +134,23 @@ class Image_Functions {
         if (!empty($image_id) && !empty($size)) {
             global $wpdb;
             $crush_image_actions_table = $wpdb->prefix . 'crush_image_actions';
-            $table_image_sizes = $wpdb->prefix . 'crush_image_sizes';
-            $results = $wpdb->get_results("SELECT *,(select i.image_file_size from $table_image_sizes i where p.image_id = i.image_id and i.image_size = '$size') as image_file_size FROM $crush_image_actions_table p WHERE p.image_id = $image_id AND p.is_history = 0 AND p.image_size='$size'", OBJECT);
+	        $results = $wpdb->get_results(
+		        "SELECT ca.image_path, ca.crushed_size, ca.saved, ca.image_backup_path, ca.image_id, ca.action,
+       				ca.image_size, ca.compression_type, ca.original_size FROM $crush_image_actions_table ca
+					WHERE ca.image_id = $image_id AND ca.is_history = 0 AND ca.image_size='$size'", OBJECT
+	        );
             if (!empty($results)) {
-                $image_details['image_path'] = $results[0]->image_path;
-                $image_details['original_size'] = $results[0]->image_file_size;
-                $image_details['image_id'] = $results[0]->image_id;
-                $image_details['crushed_size'] = $results[0]->crushed_size;
-                $image_details['saved'] = $results[0]->saved;
-                $image_details['action'] = $results[0]->action;
-                $image_details['compression_type'] = $results[0]->compression_type;
-                $image_details['backup_image'] = $results[0]->image_backup_path;
-                $image_details['image_size'] = $results[0]->image_size;
+	            $image_details                  = self::set_image( $results[0] );
+	            $image_details['original_size'] = $results[0]->original_size;
+	            if ( empty( $image_details['original_size'] ) ) {
+		            $results = $wpdb->get_results(
+			            "SELECT pm.meta_value FROM $wpdb->postmeta pm
+            			WHERE pm.meta_key = '_wp_attachment_metadata' AND pm.post_id = $image_id", OBJECT
+		            );
+		            if ( ! empty( $results ) ) {
+			            $image_details['original_size'] = self::get_image_size( $results[0], $size );
+		            }
+	            }
             }
         }
         return $image_details;
@@ -210,7 +185,7 @@ class Image_Functions {
     public static function check_image_compress($crushed_id) {
         $response = array();
         if (!empty($crushed_id)) {
-            $image_details = self::get_crushed_image_details($crushed_id);
+            $image_details = self::get_image_by_crushed_id( $crushed_id );
             if (!empty($image_details) && !empty($image_details['action'])) {
                 $upload_dir = wp_upload_dir();
                 if ($image_details['action'] == 'error') {
@@ -383,11 +358,43 @@ class Image_Functions {
         $compression_sizes = get_option('compression_sizes');
         if (!empty($image_id) && !empty($compression_sizes)) {
             global $wpdb;
-            $crush_image_sizes_table = $wpdb->prefix . 'crush_image_sizes';
-            $images_type = implode("','", $compression_sizes);
-            $image_items = $wpdb->get_results("select p.image_id,p.image_size,p.image_size_path
-                            from $crush_image_sizes_table p
-                            where p.image_size IN ('$images_type') AND p.image_id = $image_id ");
+	        $sql = "SELECT pm.post_id, pm.meta_value FROM $wpdb->postmeta pm
+            WHERE pm.meta_key = '_wp_attachment_metadata' AND pm.post_id = $image_id";
+	        $results = $wpdb->get_results( $sql );
+	        if ( ! empty( $results ) ) {
+		        foreach ( $results as $image ) {
+			        $attachment_id = $image->post_id;
+			        if ( ! empty( $image->meta_value ) ) {
+				        $data = unserialize( $image->meta_value );
+				        if ( ! empty( $attachment_id ) && ! empty( $data ) ) {
+					        $upload_dir = wp_upload_dir();
+
+					        //full image path
+					        $full_image_path = $upload_dir['basedir'] . '/' . $data['file'];
+					        $full_image_url  = $upload_dir['baseurl'] . '/' . $data['file'];
+					        $full_image_name = basename( $full_image_path );
+
+					        // general dir
+					        $base_dir_url = str_replace( $full_image_name, '', $full_image_url );
+
+					        if ( $compression_sizes && ! empty( $data['sizes'] ) ) {
+						        foreach ( $data['sizes'] as $key => $size ) {
+							        if ( in_array( $key, $compression_sizes ) ) {
+								        $image_with_size           = new stdClass();
+								        $image_with_size->image_id = $attachment_id;
+								        //sized image path
+								        $sized_file_url = $base_dir_url . $size['file'];
+
+								        $image_with_size->image_size      = $key;
+								        $image_with_size->image_size_path = $sized_file_url;
+								        $image_items[]                    = $image_with_size;
+							        }
+						        }
+					        }
+				        }
+			        }
+		        }
+	        }
         }
         return $image_items;
     }
@@ -396,25 +403,32 @@ class Image_Functions {
         $image_original_size = '';
         if (!empty($image_id) && !empty($size)) {
             global $wpdb;
-            $crush_image_sizes_table = $wpdb->prefix . 'crush_image_sizes';
-            $image_items = $wpdb->get_results("select p.image_id,p.image_size,p.image_size_path,p.image_file_size    
-                            from $crush_image_sizes_table p
-                            where  p.image_size = '$size' AND p.image_id = $image_id ");
-            if (!empty($image_items)) {
-                $image_original_size = $image_items[0]->image_file_size;
+	        $crush_image_actions_table = $wpdb->prefix . 'crush_image_actions';
+	        $sql = "SELECT ca.original_size FROM $crush_image_actions_table ca
+					WHERE ca.image_id = $image_id AND ca.image_size='$size'";
+	        $results = $wpdb->get_results( $sql );
+            if ( ! empty( $results ) ) {
+	            $image_original_size = $results[0]->original_size;
+	            if ( empty( $image_original_size ) ) {
+		            $results = $wpdb->get_results(
+			            "SELECT pm.meta_value FROM $wpdb->postmeta pm
+            			WHERE pm.meta_key = '_wp_attachment_metadata' AND pm.post_id = $image_id", OBJECT
+		            );
+		            if ( ! empty( $results ) ) {
+			            $image_original_size = self::get_image_size( $results[0], $size );
+		            }
+	            }
+            } else {
+	            $results = $wpdb->get_results(
+		            "SELECT pm.meta_value FROM $wpdb->postmeta pm
+            			WHERE pm.meta_key = '_wp_attachment_metadata' AND pm.post_id = $image_id", OBJECT
+	            );
+	            if ( ! empty( $results ) ) {
+		            $image_original_size = self::get_image_size( $results[0], $size );
+	            }
             }
         }
         return $image_original_size;
-    }
-
-    public static function get_crushed_images_by_id($image_id) {
-        $results = array();
-        if (!empty($image_id)) {
-            global $wpdb;
-            $crush_image_actions_table = $wpdb->prefix . 'crush_image_actions';
-            $results = $wpdb->get_results("SELECT * FROM $crush_image_actions_table WHERE image_id = $image_id", OBJECT);
-        }
-        return $results;
     }
 
     public static function is_action_exist($image_id, $size, $action) {
@@ -541,7 +555,6 @@ class Image_Functions {
             $crushed_size = '';
             $saved = '';
             $compression_type = '';
-            $history_html = '';
             $image_id = '';
 
             if (!empty($type) && $type == 'image_id') {
@@ -552,21 +565,19 @@ class Image_Functions {
                 } else {
                     $original_size = $image_sized_details['original_size'];
                     $crushed_size = self::format_size_units($image_sized_details['crushed_size']);
-//                    $saved_value = (int) self::size_units($original_size) - (int) self::size_units($image_sized_details['crushed_size']);
                     $saved = self::get_saved_size(self::size_from_bytes($original_size), self::size_from_bytes($image_sized_details['crushed_size']));
                 }
                 $image_id = $id;
                 $compression_type = $image_sized_details['compression_type'];
                 $file_size = $image_sized_details['original_size'];
             } elseif (!empty($type) && $type == 'crush_id') {
-                $image_crushed_details = self::get_crushed_image_details($id, $size);
+                $image_crushed_details = self::get_image_by_crushed_id( $id );
                 if (empty($image_crushed_details['crushed_size'])) {
                     $crushed_size = '-';
                     $saved = '-';
                 } else {
                     $original_size = $image_crushed_details['size'];
                     $crushed_size = self::format_size_units($image_crushed_details['crushed_size']);
-                    //$saved_value = (int) self::size_units($original_size) - (int) self::size_units($image_crushed_details['crushed_size']);
                     $saved = self::get_saved_size(self::size_from_bytes($original_size), self::size_from_bytes($image_crushed_details['crushed_size']));
                 }
                 $compression_type = $image_crushed_details['compression_type'];
@@ -579,17 +590,14 @@ class Image_Functions {
             $crushed_images_count = 0;
             //check if api activated
             $crush_image_actions_table = $wpdb->prefix . 'crush_image_actions';
-            $table_image_sizes = $wpdb->prefix . 'crush_image_sizes';
             //total images count and crushed images count
             $enabled_sizes = get_option('compression_sizes');
-            if (!$enabled_sizes)
-                $enabled_sizes = array('full');
-            else
-                $enabled_sizes[] = 'full';
 
-            $images_count_res = $wpdb->get_row('select count(id) as images_count from ' . $table_image_sizes . ' where image_size in ("' . implode('", "', $enabled_sizes) . '")');
+	        $sql = "SELECT pm.post_id, pm.meta_value FROM $wpdb->postmeta pm
+				WHERE pm.meta_key = '_wp_attachment_metadata'";
+	        $images_count_res = self::get_images_count( $enabled_sizes, $sql );
             if ($images_count_res)
-                $images_count = $images_count_res->images_count;
+                $images_count = $images_count_res;
 
 
             $crushed_images_count_res = $wpdb->get_row('select count(id) as crushed_images_count from ' . $crush_image_actions_table . ' where action  IN ("crushed","error") and is_history = 0 and image_size in ("' . implode('", "', $enabled_sizes) . '")');
@@ -666,11 +674,10 @@ class Image_Functions {
     public static function list_all_full_image($search_term = '', $offest = 0, $limit = 0) {
         global $wpdb;
         $crush_image_actions_table = $wpdb->prefix . 'crush_image_actions';
-        $table_image_sizes = $wpdb->prefix . 'crush_image_sizes';
-        $query = "select p.ID,p.guid,p.post_date,(select i.saved from $crush_image_actions_table i where p.ID = i.image_id and i.is_history = 0 and i.image_size = 'full' LIMIT 1) as saved
+	    $query = "select p.ID,p.guid,p.post_date,(select i.saved from $crush_image_actions_table i where p.ID = i.image_id and i.is_history = 0 and i.image_size = 'full' LIMIT 1) as saved
                 ,(select i.image_backup_path from $crush_image_actions_table i where p.ID = i.image_id and i.is_history = 0 and i.image_size = 'full' LIMIT 1) as backup_image
-                ,(select i.action from $crush_image_actions_table i where p.ID = i.image_id and i.is_history = 0 and i.image_size = 'full' LIMIT 1) as status 
-                ,(select i.image_file_size from $table_image_sizes i where p.ID = i.image_id and i.image_size = 'full' LIMIT 1) as image_file_size
+                ,(select i.action from $crush_image_actions_table i where p.ID = i.image_id and i.is_history = 0 and i.image_size = 'full' LIMIT 1) as status
+                , ( SELECT ca.original_size FROM $crush_image_actions_table ca WHERE p.ID = ca.image_id AND ca.image_size = 'full' LIMIT 1 ) AS image_file_size
                 from $wpdb->posts p
                 where
                 p.post_type = 'attachment' and
@@ -687,140 +694,48 @@ class Image_Functions {
             $pagenation = "LIMIT $offest, $limit";
         }
         $sql = $query . $order . $pagenation;
-        $images = $wpdb->get_results($sql);
+	    $images = $wpdb->get_results($sql);
+
+	    foreach ( $images as $key => $image ) {
+		    if ( empty( $images[$key]->image_file_size ) ) {
+			    $results = $wpdb->get_results(
+				    "SELECT pm.meta_value FROM $wpdb->postmeta pm
+            			WHERE pm.meta_key = '_wp_attachment_metadata' AND pm.post_id = $image->ID", OBJECT
+			    );
+			    if ( ! empty( $results ) ) {
+				    $images[$key]->image_file_size = self::get_image_size( $results[0], 'full' );
+			    }
+		    }
+	    }
 
         return $images;
-    }
-
-    public static function site_image_sizes_handling($offest = 0, $limit = 15) {
-
-        global $wpdb;
-
-        //check for removed images while plugin not active
-        $crush_image_sizes = $wpdb->prefix . 'crush_image_sizes';
-        $deleted_images_array = array();
-        $deleted_img_query = "SELECT DISTINCT(image_id) FROM $crush_image_sizes
-                WHERE image_id not in (select ID from $wpdb->posts WHERE post_type = 'attachment' 
-                and post_status = 'inherit' and 
-                (post_mime_type = 'image/jpeg' OR post_mime_type = 'image/gif' OR post_mime_type = 'image/png'))";
-        $deleted_images = $wpdb->get_results($deleted_img_query);
-        foreach ($deleted_images as $deleted_image) {
-            $deleted_images_array[] = $deleted_image->image_id;
-        }
-
-        if ($deleted_images_array) {
-            $deleted_images_ids = implode(',', $deleted_images_array);
-            $crush_image_actions = $wpdb->prefix . 'crush_image_actions';
-            $crush_image_all_sizes = $wpdb->prefix . 'crush_image_all_sizes';
-
-            $wpdb->query("delete from $crush_image_sizes where image_id in ($deleted_images_ids)");
-            $wpdb->query("delete from $crush_image_actions where image_id in ($deleted_images_ids)");
-            $wpdb->query("delete from $crush_image_all_sizes where image_id in ($deleted_images_ids)");
-        }
-
-
-        $query = "select p.ID,p.guid,p.post_date,pm.meta_value 
-                from $wpdb->posts p
-                left join $wpdb->postmeta pm ON p.ID = pm.post_id
-                where
-                p.post_type = 'attachment' and
-                p.post_status = 'inherit' and
-                (p.post_mime_type = 'image/jpeg' OR p.post_mime_type = 'image/gif' OR p.post_mime_type = 'image/png')
-                and pm.meta_key = '_wp_attachment_metadata'
-                ";
-        if (!empty($limit)) {
-            $pagenation = "LIMIT $offest, $limit";
-        }
-        $sql = $query . $pagenation;
-        $images = $wpdb->get_results($sql);
-        if (!empty($images)) {
-            foreach ($images as $image) {
-                $attachment_id = $image->ID;
-                if (!empty($image->meta_value)) {
-                    $metadata = unserialize($image->meta_value);
-                    $insert_image_sql_data = self::insert_image_sizes($attachment_id, $metadata);
-                    if (!empty($insert_image_sql_data) && !empty($insert_image_sql_data['sql'])) {
-                        $wpdb->query($insert_image_sql_data['sql']);
-                    }
-                    if (!empty($insert_image_sql_data) && !empty($insert_image_sql_data['sizes'])) {
-                        $old_crushed_sizes = Image_Functions::get_image_crushed_sizes($attachment_id);
-                        foreach ($insert_image_sql_data['sizes'] as $size => $image_url) {
-                            //compress image if automated
-                            self::automatic_compress_uploaded_image($attachment_id, $image_url, $size, $old_crushed_sizes);
-                        }
-                    }
-                }
-            }
-            $next_offest = $offest + $limit;
-            self::site_image_sizes_handling($next_offest, $limit);
-        }
     }
 
     public static function insert_image_sizes($attachment_id, $data) {
         $sql_data = array();
         if (!empty($attachment_id) && !empty($data)) {
-            global $wpdb;
             $upload_dir = wp_upload_dir();
             $missed_sizes = array();
             //full image path and size
             $full_image_path = $upload_dir['basedir'] . '/' . $data['file'];
             $full_image_url = $upload_dir['baseurl'] . '/' . $data['file'];
-            $full_image_file_size = filesize($full_image_path);
             $full_image_name = basename($full_image_path);
             // general dir
-            $base_dir_path = str_replace($full_image_name, '', $full_image_path);
             $base_dir_url = str_replace($full_image_name, '', $full_image_url);
-            // insert full image 
-            $image_sizes_table = $wpdb->prefix . 'crush_image_sizes';
-            $old_sizes = self::get_image_meta_sizes($attachment_id);
-            $sql = "";
-            if (!in_array('full', $old_sizes)) {
-                $missed_sizes['full'] = $full_image_url;
-                if (empty($sql)) {
-                    $sql = "INSERT INTO $image_sizes_table (image_id, image_size, image_size_path,image_file_size) VALUES ";
-                }
-                $sql .= "('" . $attachment_id . "','full','" . $full_image_url . "','" . $full_image_file_size . "')";
-            }
+            // insert full image
+            $missed_sizes['full'] = $full_image_url;
             if (!empty($data['sizes'])) {
                 //get last element in array
-                $sized_file_path = '';
-                $sized_file_size = '';
                 foreach ($data['sizes'] as $key => $size) {
-                    //sized image path and size
-                    $sized_file_path = $base_dir_path . $size['file'];
+                    //sized image path
                     $sized_file_url = $base_dir_url . $size['file'];
-                    $sized_file_size = filesize($sized_file_path);
                     // insert image sizes
-                    if (!in_array($key, $old_sizes)) {
-                        $missed_sizes[$key] = $sized_file_url;
-                        if (empty($sql)) {
-                            $sql = "INSERT INTO $image_sizes_table (image_id, image_size, image_size_path,image_file_size) VALUES ";
-                        } else {
-                            $sql .= ",";
-                        }
-                        $sql .= "('" . $attachment_id . "','" . $key . "','" . $sized_file_url . "','" . $sized_file_size . "')";
-                    }
+                    $missed_sizes[$key] = $sized_file_url;
                 }
             }
-            $sql_data['sql'] = $sql;
             $sql_data['sizes'] = $missed_sizes;
         }
         return $sql_data;
-    }
-
-    public static function get_image_meta_sizes($image_id = '') {
-        $sizes = array();
-        if (!empty($image_id)) {
-            global $wpdb;
-            $crush_image_sizes_table = $wpdb->prefix . 'crush_image_sizes';
-            $results = $wpdb->get_results("SELECT * FROM $crush_image_sizes_table WHERE image_id = $image_id", OBJECT);
-            if (!empty($results) && count($results) > 0) {
-                foreach ($results as $result) {
-                    $sizes[] = $result->image_size;
-                }
-            }
-        }
-        return $sizes;
     }
 
     public static function get_image_crushed_sizes($image_id = '') {
@@ -880,7 +795,6 @@ class Image_Functions {
             $crushed_images_count = 0;
             //check if api activated
             $crush_image_actions_table = $wpdb->prefix . 'crush_image_actions';
-            $table_image_sizes = $wpdb->prefix . 'crush_image_sizes';
             //total images count and crushed images count
             $enabled_sizes = get_option('compression_sizes');
             if (!$enabled_sizes)
@@ -888,9 +802,11 @@ class Image_Functions {
             else
                 $enabled_sizes[] = 'full';
 
-            $images_count_res = $wpdb->get_row('select count(id) as images_count from ' . $table_image_sizes . ' where image_size in ("' . implode('", "', $enabled_sizes) . '")');
+	        $sql = "SELECT pm.post_id, pm.meta_value FROM $wpdb->postmeta pm
+				WHERE pm.meta_key = '_wp_attachment_metadata'";
+	        $images_count_res = self::get_images_count( $enabled_sizes, $sql );
             if ($images_count_res)
-                $images_count = $images_count_res->images_count;
+                $images_count = $images_count_res;
 
 
             $crushed_images_count_res = $wpdb->get_row('select count(id) as crushed_images_count from ' . $crush_image_actions_table . ' where action IN ("crushed","error") and is_history = 0 and image_size in ("' . implode('", "', $enabled_sizes) . '")');
@@ -909,16 +825,72 @@ class Image_Functions {
     public static function handle_crush_all() {
 
         global $wpdb;
-        $total = 0;
         $enabled_sizes = get_option('compression_sizes');
-        if (!$enabled_sizes)
-            $enabled_sizes = array('full');
-        else
-            $enabled_sizes[] = 'full';
         $crush_image_actions_table = $wpdb->prefix . 'crush_image_actions';
-        $table_image_sizes = $wpdb->prefix . 'crush_image_sizes';
-        $query = "select * from $table_image_sizes where image_size in ('" . implode("','", $enabled_sizes) . "') and (image_id,image_size) NOT IN (select image_id,image_size from  $crush_image_actions_table where action IN ('crushed','error') and is_history = 0)";
-        $un_crushed_images = $wpdb->get_results($query);
+	    $query = "SELECT image_id, image_size FROM $crush_image_actions_table WHERE action IN ('crushed','error') AND is_history = 0";
+	    $excludes = $wpdb->get_results( $query );
+	    $query = "SELECT pm.post_id, pm.meta_value FROM $wpdb->postmeta pm
+        	WHERE pm.meta_key = '_wp_attachment_metadata'";
+	    $results = $wpdb->get_results( $query );
+	    if ( ! empty( $results ) ) {
+		    foreach ( $results as $image ) {
+			    $image_with_size = new stdClass();
+			    $attachment_id = $image_with_size->image_id = $image->post_id;
+			    if ( ! empty( $image->meta_value ) ) {
+				    $data = unserialize( $image->meta_value );
+				    if ( ! empty( $attachment_id ) && ! empty( $data ) ) {
+					    $crushed = false;
+					    $upload_dir = wp_upload_dir();
+
+					    //full image path and size
+					    $full_image_path = $upload_dir['basedir'] . '/' . $data['file'];
+					    $full_image_url  = $upload_dir['baseurl'] . '/' . $data['file'];
+					    $full_image_name = basename( $full_image_path );
+
+					    // general dir
+					    $base_dir_url = str_replace( $full_image_name, '', $full_image_url );
+
+					    foreach ( $excludes as $exclude ) {
+						    if ( ( $attachment_id == $exclude->image_id ) && ( $exclude->image_size == 'full' ) ) {
+							    $crushed = true;
+
+							    break;
+						    }
+					    }
+					    if ( ! $crushed ) {
+						    $image_with_size->image_size      = 'full';
+						    $image_with_size->image_size_path = $full_image_url;
+						    $un_crushed_images[]              = $image_with_size;
+					    }
+
+					    if ( $enabled_sizes && ! empty( $data['sizes'] ) ) {
+						    foreach ( $data['sizes'] as $key => $size ) {
+							    if ( in_array( $key, $enabled_sizes ) ) {
+								    $crushed = false;
+								    foreach ( $excludes as $exclude ) {
+									    if ( ( $attachment_id == $exclude->image_id ) && ( $exclude->image_size == $key ) ) {
+										    $crushed = true;
+
+										    break;
+									    }
+								    }
+								    if ( ! $crushed ) {
+									    $image_with_size           = new stdClass();
+									    $image_with_size->image_id = $attachment_id;
+									    //sized image path
+									    $sized_file_url = $base_dir_url . $size['file'];
+
+									    $image_with_size->image_size      = $key;
+									    $image_with_size->image_size_path = $sized_file_url;
+									    $un_crushed_images[]              = $image_with_size;
+								    }
+							    }
+						    }
+					    }
+				    }
+			    }
+		    }
+	    }
         self::$crush_all_process = new WP_Crush_All_Process();
         if (!empty($un_crushed_images)) {
             update_option('crush_start', 'yes', 'no');
@@ -951,21 +923,114 @@ class Image_Functions {
     }
 
     public static function get_total_number_crushed_size_images($image_id) {
-        $total_versions_no = 0;
+	    $total_versions_no = 0;
         if (!empty($image_id)) {
             global $wpdb;
             $enabled_sizes = get_option('compression_sizes');
-            if (!$enabled_sizes)
-                $enabled_sizes = array('full');
-            else
-                $enabled_sizes[] = 'full';
 
-            $table_image_sizes = $wpdb->prefix . 'crush_image_sizes';
-            $query = "select * from $table_image_sizes where image_size in ('" . implode("','", $enabled_sizes) . "') and image_id = $image_id ";
-            $results = $wpdb->get_results($query);
-            $total_versions_no = count($results);
+	        $sql = "SELECT pm.post_id, pm.meta_value FROM $wpdb->postmeta pm
+				WHERE pm.meta_key = '_wp_attachment_metadata' AND pm.post_id = $image_id";
+            $total_versions_no = self::get_images_count( $enabled_sizes, $sql );
         }
         return $total_versions_no;
     }
+
+	/**
+	 * @return mixed|string
+	 * @throws Exception
+	 */
+	public static function get_next_charge_days() {
+		$crush_next_charge = get_option( 'wpic_plan_next_charge' );
+		$next_charge_days  = '-';
+		if ( $crush_next_charge ) {
+			$today = new DateTime();
+			$today->setTimestamp( current_time( 'timestamp' ) );
+			$crush_next_charge = new DateTime( $crush_next_charge );
+			$next_charge_days  = $crush_next_charge->diff( $today )->days;
+
+			$next_charge_days = sprintf( _n( '%s Day', '%s Days', $next_charge_days, 'wp-image-compression' ), $next_charge_days );
+		}
+		return $next_charge_days;
+	}
+
+	public static function get_images_count( $enabled_sizes, $sql ) {
+		global $wpdb;
+		$images_count = 0;
+
+		$images = $wpdb->get_results( $sql );
+		if ( ! empty( $images ) ) {
+			foreach ( $images as $image ) {
+				$attachment_id = $image->post_id;
+				if ( ! empty( $image->meta_value ) ) {
+					$data = unserialize( $image->meta_value );
+					if ( ! empty( $attachment_id ) && ! empty( $data ) ) {
+						$images_count++;
+						if ( $enabled_sizes && ! empty( $data['sizes'] ) ) {
+							foreach ( $data['sizes'] as $key => $size ) {
+								if ( in_array( $key, $enabled_sizes ) ) {
+									$images_count++;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return $images_count;
+	}
+
+	/**
+	 * @param $results
+	 *
+	 * @return mixed
+	 */
+	private static function set_image( $results ) {
+		$image_details['image_path']       = $results->image_path;
+		$image_details['crushed_size']     = $results->crushed_size;
+		$image_details['saved']            = $results->saved;
+		$image_details['backup_image']     = $results->image_backup_path;
+		$image_details['image_id']         = $results->image_id;
+		$image_details['action']           = $results->action;
+		$image_details['image_size']       = $results->image_size;
+		$image_details['compression_type'] = $results->compression_type;
+
+		return $image_details;
+	}
+
+	/**
+	 * @param $results
+	 * @param $size
+	 *
+	 * @return false|int
+	 */
+	public static function get_image_size( $results, $size ) {
+		$image_details['size'] = '';
+		$image_with_size       = $results;
+		if ( ! empty( $image_with_size->meta_value ) ) {
+			$data = unserialize( $image_with_size->meta_value );
+			if ( ! empty( $data ) ) {
+				$upload_dir = wp_upload_dir();
+
+				//full image path
+				$full_image_path = $upload_dir['basedir'] . '/' . $data['file'];
+
+				if ( $size == 'full' ) {
+					$image_details['size'] = filesize( $full_image_path );
+				} else {
+					if ( ! empty( $data['sizes'] ) ) {
+
+						$full_image_name = basename( $full_image_path );
+
+						// general dir
+						$base_dir_path = str_replace( $full_image_name, '', $full_image_path );
+
+						$sized_file_path       = $data['sizes'][$size]['file'] ? $base_dir_path . $data['sizes'][$size]['file'] : '';
+						$image_details['size'] = filesize( $sized_file_path );
+					}
+				}
+				return $image_details['size'];
+			}
+		}
+	}
 
 }

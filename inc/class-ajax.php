@@ -240,20 +240,17 @@ class Image_Compression_Ajax {
     function wpic_reload_image_table() {
         ob_start();
         global $wpdb;
-        //check if api activated
         $crush_image_actions_table = $wpdb->prefix . 'crush_image_actions';
-        $table_image_sizes = $wpdb->prefix . 'crush_image_sizes';
         //total images count and crushed images count
         $enabled_sizes = get_option('compression_sizes');
-        if (!$enabled_sizes)
-            $enabled_sizes = array('full');
-        else
-            $enabled_sizes[] = 'full';
+	    if ( ! $enabled_sizes )
+		    $enabled_sizes = array( 'full' );
+	    else
+		    $enabled_sizes[] = 'full';
 
-        $images_count = $wpdb->get_row('select count(id) as images_count from ' . $table_image_sizes . ' where image_size in ("' . implode('", "', $enabled_sizes) . '")');
-        if ($images_count)
-            $images_count = $images_count->images_count;
-
+	    $sql = "SELECT pm.post_id, pm.meta_value FROM $wpdb->postmeta pm
+				WHERE pm.meta_key = '_wp_attachment_metadata'";
+	    $images_count = Image_Functions::get_images_count( $enabled_sizes, $sql );
 
         $crushed_images_count = $wpdb->get_row('select count(id) as crushed_images_count from ' . $crush_image_actions_table . ' where action IN ("crushed","error") and is_history = 0 and image_size in ("' . implode('", "', $enabled_sizes) . '")');
         if ($crushed_images_count)
@@ -271,16 +268,7 @@ class Image_Compression_Ajax {
         $images = Image_Functions::list_all_full_image($image_term, $offset, $limit);
         //get user plan data
         $plan_data = get_option('wpic_plan_data');
-        $crush_next_charge = get_option('wpic_plan_next_charge');
-        $next_charge_days = '-';
-        if ($crush_next_charge) {
-            $today = new DateTime();
-            $today->setTimestamp(current_time('timestamp'));
-            $crush_next_charge = new DateTime($crush_next_charge);
-            $next_charge_days = $crush_next_charge->diff($today)->days;
-
-            $next_charge_days = sprintf(_n('%s Day', '%s Days', $next_charge_days, 'wp-image-compression'), $next_charge_days);
-        }
+	    $next_charge_days = Image_Functions::get_next_charge_days();
         $quota_usage = round($plan_data['quota_usage'] / 1000000, 2);
         $bytes = round($plan_data['bytes'] / 1000000, 2);
         $quota_usage_precentage = '';

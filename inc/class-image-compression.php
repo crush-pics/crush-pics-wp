@@ -64,19 +64,6 @@ class Image_Compression {
 		) $charset_collate;";
             dbDelta($sql);
         }
-        //image sizes table
-        $table_image_sizes = $wpdb->prefix . 'crush_image_sizes';
-        if ($wpdb->get_var("SHOW TABLES LIKE '$table_image_sizes'") != $table_image_sizes) {
-            $sql = "CREATE TABLE " . $table_image_sizes . " (
-                        `id` bigint(20) NOT NULL AUTO_INCREMENT,
-			`image_id` bigint(20) NOT NULL,
-                        `image_size` varchar(255) NOT NULL,
-                        `image_size_path` varchar(255) NULL DEFAULT '',
-                        `image_file_size` varchar(255) NULL DEFAULT '',                        
-			PRIMARY KEY (`id`)
-		) $charset_collate;";
-            dbDelta($sql);
-        }
         //image crush all sizes table
         $table_crush_image_all_sizes = $wpdb->prefix . 'crush_image_all_sizes';
         if ($wpdb->get_var("SHOW TABLES LIKE '$table_crush_image_all_sizes'") != $table_crush_image_all_sizes) {
@@ -90,9 +77,6 @@ class Image_Compression {
 		) $charset_collate;";
             dbDelta($sql);
         }
-        
-        //cache/remove images
-        Image_Functions::site_image_sizes_handling();
     }
 
     // Creating tables whenever a new blog is created
