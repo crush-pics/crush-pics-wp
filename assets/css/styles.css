@@ -1182,6 +1182,7 @@ a.btn, a.btn:hover {
 
 .compression-status-col {
     width: 225px;
+    text-align: center;
 }
 
 .image-actions {
